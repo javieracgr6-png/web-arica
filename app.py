@@ -6,7 +6,7 @@ import base64
 # 1. Configuración de la página
 st.set_page_config(layout="wide", page_title="Descubre Arica", page_icon="🏔️")
 
-# 2. Estilos CSS
+# 2. Estilos CSS (CORREGIDO PARA QUE SE VEAN LAS LETRAS)
 st.markdown("""
 <style>
     .main { background-color: #f8f9fa; }
@@ -25,12 +25,23 @@ st.markdown("""
         background-size: cover; background-position: center; padding: 80px 40px; border-radius: 15px; color: white; margin-bottom: 30px;
     }
     
-    /* Cajas de Info (Clima/Divisas) */
+    /* Cajas de Info (Clima/Divisas) - CORRECCIÓN DE COLOR DE TEXTO */
     .info-box {
-        background-color: white; padding: 20px; border-radius: 10px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.05); border: 1px solid #e0e0e0; height: 100%;
+        background-color: white; 
+        padding: 20px; 
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05); 
+        border: 1px solid #e0e0e0; 
+        height: 100%;
     }
-    .price-text { font-size: 24px; font-weight: bold; color: #0d8ca1; }
+    
+    /* Forzamos que TODO el texto dentro de info-box sea oscuro */
+    .info-box, .info-box h5, .info-box p, .info-box span, .info-box div {
+        color: #333333 !important;
+    }
+    
+    /* Texto específico del precio */
+    .price-text { font-size: 24px; font-weight: bold; color: #0d8ca1 !important; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -50,7 +61,6 @@ if 'places' not in st.session_state:
         {"id": 11, "name": "Presencias Tutelares", "cat": "Cultural", "img": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg0Rbukx0WSTPWXz2r19DIVFS2Kk8ezLtmq1n8hWLT0G-cheXUERy1bl-kozPeLoc3wgHyzOHL1iScRqm1HHdcmZvAWerHJeFwJ-O3B_uQNeHEJ8wyfFUsk3O_-3wc4oi3X42nAC5ptimU/s1600/_MG_1207.JPG", "desc": "Esculturas gigantes en el desierto.", "location": "Pampa de Chaca, Panamericana", "time_str": "1 hora", "hours": 1, "lat": -18.6667, "lon": -70.1833},
         {"id": 12, "name": "Playa La Lisera", "cat": "Playa", "img": "https://aricasiempreactiva.cl/wp-content/uploads/2020/11/Playa-La-Lisera-Arica-Vista-Panoramica-1900x785-1.jpg", "desc": "Ideal para familias y natación.", "location": "Sur de Arica", "time_str": "3 horas", "hours": 3, "lat": -18.4950, "lon": -70.3280},
         {"id": 13, "name": "Termas de Jurasi", "cat": "Relax", "img": "https://chileestuyo.cl/wp-content/uploads/2015/07/termas-de-jurasi.jpg", "desc": "Aguas termales medicinales.", "location": "Cerca de Putre", "time_str": "3 horas", "hours": 3, "lat": -18.2000, "lon": -69.5800},
-    ]
 
 # Gestión de Estado
 if 'favorites' not in st.session_state: st.session_state.favorites = []
@@ -82,16 +92,35 @@ if st.session_state.page == 'Inicio':
     # Clima y Divisas
     col_clima, col_divisas = st.columns(2)
     with col_clima:
-        st.markdown('<div class="info-box"><h5>☁️ Clima Actual - Arica</h5>', unsafe_allow_html=True)
-        c1, c2, c3 = st.columns([1,1,2])
-        c1.markdown("# ☀️")
-        c2.metric("Soleado", "22°C")
-        c3.caption("💧 Humedad: 65%\n\n🍃 Viento: 12 km/h")
-        st.markdown('</div>', unsafe_allow_html=True)
+        # Usamos HTML puro para garantizar que el texto sea negro y no dependa del tema de Streamlit
+        st.markdown("""
+        <div class="info-box">
+            <h5>☁️ Clima Actual - Arica</h5>
+            <div style="display: flex; align-items: center; justify-content: space-around;">
+                <div style="font-size: 40px;">☀️</div>
+                <div style="text-align: center;">
+                    <div style="font-size: 16px;">Soleado</div>
+                    <div style="font-size: 32px; font-weight: bold;">22°C</div>
+                </div>
+                <div style="font-size: 14px; color: #555;">
+                    💧 Humedad: 65%<br>
+                    🍃 Viento: 12 km/h
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
     with col_divisas:
-        st.markdown('<div class="info-box"><h5>💲 Conversor</h5>', unsafe_allow_html=True)
+        st.markdown('<div class="info-box">', unsafe_allow_html=True)
+        st.markdown("<h5>💲 Conversor</h5>", unsafe_allow_html=True)
+        
+        # Inputs nativos de Streamlit (se adaptan, pero el fondo es blanco)
         amount = st.number_input("Monto", 1000, 100000, 1000)
-        st.caption(f"Aprox: ${amount/935:,.2f} USD")
+        st.markdown(f"""
+        <div style="margin-top: 10px;">
+            Aprox: <span class="price-text">${amount/935:,.2f} USD</span>
+        </div>
+        """, unsafe_allow_html=True)
         st.markdown('</div>', unsafe_allow_html=True)
 
     # SECCIÓN DESTACADOS
