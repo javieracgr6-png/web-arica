@@ -15,34 +15,54 @@ st.markdown("""
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
     
-    /* Títulos generales (fuera de las tarjetas) en Azul */
+    /* Títulos generales */
     h1, h2, h3 { color: #008CBA !important; }
     
+    /* Botones */
     div.stButton > button { background-color: #008CBA; color: white; border-radius: 8px; border: none; font-weight: bold; }
     div.stButton > button:hover { background-color: #005f7f; transform: scale(1.02); }
     
-    /* --- AQUÍ ESTÁ EL CAMBIO PARA LOS CUADROS AZULES --- */
+    /* Tarjetas (Cards) - Fondo Azul y Letras Blancas */
     .card { 
-        background-color: #008CBA; /* Fondo Azul */
-        color: white !important;   /* Letras Blancas */
+        background-color: #008CBA; 
+        color: white !important; 
         padding: 20px; 
         border-radius: 10px; 
         border: none; 
         box-shadow: 0 4px 6px rgba(0,0,0,0.3); 
         margin-bottom: 20px; 
     }
-    
-    /* Aseguramos que los títulos y textos DENTRO de la tarjeta sean blancos */
-    .card h1, .card h2, .card h3, .card p, .card span {
-        color: white !important;
-    }
+    .card h1, .card h2, .card h3, .card p, .card span { color: white !important; }
     
     .hero-text { font-size: 3rem; font-weight: bold; text-align: center; margin-bottom: 1rem; background: -webkit-linear-gradient(white, #aaaaaa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     
-    /* Estilos del menú de navegación */
-    div.stRadio > div[role="radiogroup"] { justify-content: center; background-color: #262730; padding: 10px; border-radius: 15px; border: 1px solid #444; margin-bottom: 25px; }
-    div.stRadio > div[role="radiogroup"] > label { background-color: transparent; border: 1px solid transparent; padding: 5px 20px; border-radius: 10px; transition: all 0.3s; }
-    div.stRadio > div[role="radiogroup"] > label:hover { background-color: #333; border-color: #555; }
+    /* --- BARRA DE NAVEGACIÓN (NAVBAR) --- */
+    div.stRadio > div[role="radiogroup"] { 
+        justify-content: center; 
+        background-color: #262730; 
+        padding: 10px; 
+        border-radius: 15px; 
+        border: 1px solid #444; 
+        margin-bottom: 25px; 
+    }
+    div.stRadio > div[role="radiogroup"] > label { 
+        background-color: transparent; 
+        border: 1px solid transparent; 
+        padding: 5px 20px; 
+        border-radius: 10px; 
+        transition: all 0.3s;
+        color: white !important; /* FORZAR LETRA BLANCA EN EL MENÚ */
+    }
+    div.stRadio > div[role="radiogroup"] > label:hover { 
+        background-color: #333; 
+        border-color: #555; 
+        color: #008CBA !important;
+    }
+    div.stRadio > div[role="radiogroup"] > label[data-checked="true"] {
+        background-color: #008CBA !important;
+        color: white !important;
+    }
+
 </style>
 """, unsafe_allow_html=True)
 
@@ -89,6 +109,7 @@ def generar_pdf_estilo_tarjeta(itinerario_dias):
             y_inicio = pdf.get_y()
             imagen_insertada = False
             try:
+                # Headers y timeout para evitar bloqueos
                 response = requests.get(item['img'], headers=headers, stream=True, timeout=5)
                 if response.status_code == 200:
                     with tempfile.NamedTemporaryFile(delete=False, suffix=".jpg") as tmp_file:
@@ -136,7 +157,6 @@ if "Inicio" in opcion:
     st.write("")
     col1, col2 = st.columns(2)
     with col1:
-        # Nota: Aquí usamos la clase .card definida en CSS
         st.markdown("""
         <div class="card">
             <h3 style="margin-top:0;">☁️ Clima Actual</h3>
@@ -191,7 +211,6 @@ elif "Planificador" in opcion:
 
     col_config, col_resumen = st.columns([1, 2])
     with col_config:
-        # Aplicamos la clase card al configurador también
         st.markdown("""<div class="card">""", unsafe_allow_html=True)
         st.subheader("⚙️ Configuración")
         dias = st.number_input("¿Días de visita?", min_value=1, max_value=7, value=3)
@@ -199,7 +218,6 @@ elif "Planificador" in opcion:
         for item in [d for d in data_turismo if d['id'] in st.session_state.seleccionados]:
             st.write(f"- {item['nombre']}")
         
-        # Espacio antes del botón
         st.write("")
         if st.button("✨ Generar Itinerario", use_container_width=True):
             st.session_state.generado = True
@@ -227,4 +245,5 @@ elif "Planificador" in opcion:
                             idx_item += 1
 
             pdf_bytes = generar_pdf_estilo_tarjeta(itinerario_final)
-            st.success("✅ ¡Itinerario
+            st.success("✅ ¡Itinerario listo!")
+            st.download_button("📥 Descargar PDF (Con Fotos)", data=pdf_bytes, file_name="Itinerario_Arica.pdf", mime="application/pdf", use_container_width=True)
