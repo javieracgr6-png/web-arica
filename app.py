@@ -75,7 +75,7 @@ def set_page(page_name): st.session_state.page = page_name
 
 # --- NAVEGACIÓN ---
 c1, c2 = st.columns([1, 3])
-with c1: st.markdown("### 🧭 Descubre Arica")
+with c1: st.markdown("### 🧭 Descubre Arica y Parinacota")
 with c2:
     b1, b2, b3 = st.columns(3)
     if b1.button("🏠 Inicio", use_container_width=True): set_page('Inicio')
