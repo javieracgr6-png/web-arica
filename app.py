@@ -170,18 +170,12 @@ if st.session_state.page == 'Inicio':
 
     # --- SECCIÓN DESTACADOS CON FONDO DE ARICA ---
     
-    # 1. Generamos el HTML de las imágenes primero
+    # 1. Generamos el HTML (¡Corregido sin sangría para evitar que sea código!)
     places_html = ""
     for place in st.session_state.places:
-        places_html += f"""
-        <div class="place-item">
-            <img src="{place['img']}">
-            <div class="place-item-name">{place['name']}</div>
-            <div class="place-item-cat">{place['cat']}</div>
-        </div>
-        """
+        places_html += f"""<div class="place-item"><img src="{place['img']}"><div class="place-item-name">{place['name']}</div><div class="place-item-cat">{place['cat']}</div></div>"""
     
-    # 2. Renderizamos el contenedor completo con el fondo, título, alerta y las imágenes
+    # 2. Renderizamos
     st.markdown(f"""
     <div class="destacados-container">
         <h3 style="color:white; margin-bottom: 20px;">🌟 Destacados de la Región</h3>
