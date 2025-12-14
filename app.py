@@ -35,18 +35,16 @@ st.markdown("""
     .price-text { font-size: 24px; font-weight: bold; color: #0d8ca1 !important; }
     .custom-label { font-size: 14px; font-weight: bold; color: #333333 !important; margin-bottom: 5px; display: block; }
 
-    /* --- NUEVO ESTILO PARA LA SECCIÓN DESTACADOS --- */
+    /* --- ESTILO PARA LA SECCIÓN DESTACADOS --- */
     .destacados-container {
-        /* Imagen de fondo del Morro con una capa oscura encima para legibilidad */
         background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Morro_de_arica_view.jpg/1280px-Morro_de_arica_view.jpg');
         background-size: cover;
         background-position: center;
         padding: 30px;
         border-radius: 15px;
         margin-top: 30px;
-        color: white !important; /* Texto blanco */
+        color: white !important;
     }
-    /* Estilo para el mensaje de alerta personalizado dentro del contenedor */
     .custom-alert {
         background-color: rgba(255, 255, 255, 0.15);
         border-left: 5px solid #0d8ca1;
@@ -55,13 +53,11 @@ st.markdown("""
         margin-bottom: 25px;
         font-size: 1.1rem;
     }
-    /* Cuadrícula para las imágenes dentro del contenedor */
     .places-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Columnas responsivas */
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
         gap: 20px;
     }
-    /* Estilo de cada item de lugar */
     .place-item {
         background-color: rgba(0,0,0,0.4);
         border-radius: 10px;
@@ -83,22 +79,22 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# 3. Datos Completos (CON IMÁGENES REPARADAS)
+# 3. Datos Completos
 if 'places' not in st.session_state:
     st.session_state.places = [
-        {"id": 1, "name": "Morro de Arica", "cat": "Histórico", "img": "https://geositiosdechile.sernageomin.cl/wp-content/uploads/sites/4/2024/05/Morro-de-Arica.jpg", "desc": "Icono de la ciudad, vista panorámica.", "location": "Centro de Arica", "time_str": "2 horas", "hours": 2, "lat": -18.4802, "lon": -70.3250},
-        {"id": 2, "name": "Lago Chungará", "cat": "Naturaleza", "img": "https://mayurutour.com/wp-content/uploads/2020/01/Lago-Chungara-Parque-Nacional-Lauca.png", "desc": "Uno de los lagos más altos del mundo.", "location": "Altiplano, Parque Lauca", "time_str": "Full Day", "hours": 8, "lat": -18.2500, "lon": -69.1667},
-        {"id": 3, "name": "Cuevas de Anzota", "cat": "Aventura", "img": "https://www.costachinchorro.cl/ccc23/wp-content/uploads/2023/04/DSF8586-1024x683.jpg", "desc": "Formaciones geológicas milenarias.", "location": "Sector sur, a 12 km del centro", "time_str": "3 horas", "hours": 3, "lat": -18.5500, "lon": -70.3300},
-        {"id": 4, "name": "Pueblo de Putre", "cat": "Cultural", "img": "https://images.visitchile.com/destinos/364_putre.jpg", "desc": "Capital de la provincia de Parinacota.", "location": "Precordillera, a 145 km de Arica", "time_str": "4 horas", "hours": 4, "lat": -18.1950, "lon": -69.5600},
-        {"id": 5, "name": "Museo Arqueológico Azapa", "cat": "Cultural", "img": "https://www.uta.cl/web/site/artic/20140814/imag/foto_0000000120140814095603.jpg", "desc": "Hogar de las momias Chinchorro.", "location": "Valle de Azapa, km 12", "time_str": "3 horas", "hours": 3, "lat": -18.5150, "lon": -70.1800},
-        {"id": 6, "name": "Catedral San Marcos", "cat": "Histórico", "img": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/15/46/18/3f/img-20181023-141007-02.jpg?w=1200&h=1200&s=1", "desc": "Diseñada por Gustave Eiffel.", "location": "Plaza Colón, Centro", "time_str": "1 hora", "hours": 1, "lat": -18.4779, "lon": -70.3207},
-        {"id": 7, "name": "Humedal Río Lluta", "cat": "Naturaleza", "img": "https://aricasiempreactiva.cl/wp-content/uploads/2021/06/Humedal-Rio-Lluta-grupo-de-aves-migratorias-II-Region-de-Arica-y-Parinacota.jpg", "desc": "Santuario de la naturaleza y aves.", "location": "Desembocadura Río Lluta", "time_str": "2 horas", "hours": 2, "lat": -18.4167, "lon": -70.3167},
-        {"id": 8, "name": "Parque Nacional Lauca", "cat": "Naturaleza", "img": "https://redturismochile.cl/wp-content/uploads/2024/01/Parque-Nacioanl-Lauca-Region-Arica-y-Parinacota-.jpg", "desc": "Reserva de la biosfera, volcanes y fauna.", "location": "Altiplano Andino", "time_str": "Full Day", "hours": 9, "lat": -18.1833, "lon": -69.2333},
-        {"id": 9, "name": "Playa Chinchorro", "cat": "Playa", "img": "https://aricasiempreactiva.cl/wp-content/uploads/2020/11/Playa-Chinchorro-vista-hacia-Morro-de-Arica-1900x785px-1.jpg", "desc": "Aguas cálidas y paseo costero.", "location": "Zona Norte de Arica", "time_str": "3 horas", "hours": 3, "lat": -18.4550, "lon": -70.3000},
-        {"id": 10, "name": "Playa El Laucho", "cat": "Playa", "img": "https://www.costachinchorro.cl/ccc23/wp-content/uploads/2023/05/DSCF5033-1024x682.jpg", "desc": "Playa balneario con oleaje suave.", "location": "Av. Comandante San Martín", "time_str": "3 horas", "hours": 3, "lat": -18.4880, "lon": -70.3250},
-        {"id": 11, "name": "Presencias Tutelares", "cat": "Cultural", "img": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg0Rbukx0WSTPWXz2r19DIVFS2Kk8ezLtmq1n8hWLT0G-cheXUERy1bl-kozPeLoc3wgHyzOHL1iScRqm1HHdcmZvAWerHJeFwJ-O3B_uQNeHEJ8wyfFUsk3O_-3wc4oi3X42nAC5ptimU/s1600/_MG_1207.JPG", "desc": "Esculturas gigantes en el desierto.", "location": "Pampa de Chaca, Panamericana", "time_str": "1 hora", "hours": 1, "lat": -18.6667, "lon": -70.1833},
-        {"id": 12, "name": "Playa La Lisera", "cat": "Playa", "img": "https://aricasiempreactiva.cl/wp-content/uploads/2020/11/Playa-La-Lisera-Arica-Vista-Panoramica-1900x785-1.jpg", "desc": "Ideal para familias y natación.", "location": "Sur de Arica", "time_str": "3 horas", "hours": 3, "lat": -18.4950, "lon": -70.3280},
-        {"id": 13, "name": "Termas de Jurasi", "cat": "Relax", "img": "https://chileestuyo.cl/wp-content/uploads/2015/07/termas-de-jurasi.jpg", "desc": "Aguas termales medicinales.", "location": "Cerca de Putre", "time_str": "3 horas", "hours": 3, "lat": -18.2000, "lon": -69.5800},
+        {"id": 1, "name": "Morro de Arica", "cat": "Histórico", "img": "https://upload.wikimedia.org/wikipedia/commons/e/e5/Morro_de_arica_view.jpg", "desc": "Icono de la ciudad, vista panorámica.", "location": "Centro de Arica", "time_str": "2 horas", "hours": 2, "lat": -18.4802, "lon": -70.3250},
+        {"id": 2, "name": "Lago Chungará", "cat": "Naturaleza", "img": "https://upload.wikimedia.org/wikipedia/commons/a/a2/Parinacota.jpg", "desc": "Uno de los lagos más altos del mundo.", "location": "Altiplano, Parque Lauca", "time_str": "Full Day", "hours": 8, "lat": -18.2500, "lon": -69.1667},
+        {"id": 3, "name": "Cuevas de Anzota", "cat": "Aventura", "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Cuevas_de_Anzota.jpg/1280px-Cuevas_de_Anzota.jpg", "desc": "Formaciones geológicas milenarias.", "location": "Sector sur, a 12 km del centro", "time_str": "3 horas", "hours": 3, "lat": -18.5500, "lon": -70.3300},
+        {"id": 4, "name": "Pueblo de Putre", "cat": "Cultural", "img": "https://upload.wikimedia.org/wikipedia/commons/c/c2/Putre_church.jpg", "desc": "Capital de la provincia de Parinacota.", "location": "Precordillera, a 145 km de Arica", "time_str": "4 horas", "hours": 4, "lat": -18.1950, "lon": -69.5600},
+        {"id": 5, "name": "Museo Arqueológico Azapa", "cat": "Cultural", "img": "https://upload.wikimedia.org/wikipedia/commons/2/23/Museo_Arqueol%C3%B3gico_San_Miguel_de_Azapa.jpg", "desc": "Hogar de las momias Chinchorro.", "location": "Valle de Azapa, km 12", "time_str": "3 horas", "hours": 3, "lat": -18.5150, "lon": -70.1800},
+        {"id": 6, "name": "Catedral San Marcos", "cat": "Histórico", "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Catedral_de_San_Marcos%2C_Arica%2C_Chile%2C_2024-05-18%2C_DD_16.jpg/640px-Catedral_de_San_Marcos%2C_Arica%2C_Chile%2C_2024-05-18%2C_DD_16.jpg", "desc": "Diseñada por Gustave Eiffel.", "location": "Plaza Colón, Centro", "time_str": "1 hora", "hours": 1, "lat": -18.4779, "lon": -70.3207},
+        {"id": 7, "name": "Humedal Río Lluta", "cat": "Naturaleza", "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Desembocadura_del_rio_Lluta.jpg/1280px-Desembocadura_del_rio_Lluta.jpg", "desc": "Santuario de la naturaleza y aves.", "location": "Desembocadura Río Lluta", "time_str": "2 horas", "hours": 2, "lat": -18.4167, "lon": -70.3167},
+        {"id": 8, "name": "Parque Nacional Lauca", "cat": "Naturaleza", "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Lauca_National_Park.jpg/1280px-Lauca_National_Park.jpg", "desc": "Reserva de la biosfera, volcanes y fauna.", "location": "Altiplano Andino", "time_str": "Full Day", "hours": 9, "lat": -18.1833, "lon": -69.2333},
+        {"id": 9, "name": "Playa Chinchorro", "cat": "Playa", "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Playa_Chinchorro%2C_Arica.jpg/1280px-Playa_Chinchorro%2C_Arica.jpg", "desc": "Aguas cálidas y paseo costero.", "location": "Zona Norte de Arica", "time_str": "3 horas", "hours": 3, "lat": -18.4550, "lon": -70.3000},
+        {"id": 10, "name": "Playa El Laucho", "cat": "Playa", "img": "https://upload.wikimedia.org/wikipedia/commons/1/18/Playa_El_Laucho_-_Arica.jpg", "desc": "Playa balneario con oleaje suave.", "location": "Av. Comandante San Martín", "time_str": "3 horas", "hours": 3, "lat": -18.4880, "lon": -70.3250},
+        {"id": 11, "name": "Presencias Tutelares", "cat": "Cultural", "img": "https://upload.wikimedia.org/wikipedia/commons/8/87/Presencias_Tutelares.jpg", "desc": "Esculturas gigantes en el desierto.", "location": "Pampa de Chaca, Panamericana", "time_str": "1 hora", "hours": 1, "lat": -18.6667, "lon": -70.1833},
+        {"id": 12, "name": "Playa La Lisera", "cat": "Playa", "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Playa_La_Lisera_-_Arica.jpg/1280px-Playa_La_Lisera_-_Arica.jpg", "desc": "Ideal para familias y natación.", "location": "Sur de Arica", "time_str": "3 horas", "hours": 3, "lat": -18.4950, "lon": -70.3280},
+        {"id": 13, "name": "Termas de Jurasi", "cat": "Relax", "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Termas_de_Jurasi.jpg/1280px-Termas_de_Jurasi.jpg", "desc": "Aguas termales medicinales.", "location": "Cerca de Putre", "time_str": "3 horas", "hours": 3, "lat": -18.2000, "lon": -69.5800},
     ]
 
 # Gestión de Estado
@@ -128,7 +124,7 @@ if st.session_state.page == 'Inicio':
     # Hero
     st.markdown("""<div class="hero"><h1>Descubre la magia del norte de Chile</h1><p>Playas infinitas, valles fértiles y cultura milenaria.</p></div>""", unsafe_allow_html=True)
     
-    # Clima y Divisas (HTML Puro)
+    # Clima y Divisas
     col_clima, col_divisas = st.columns(2)
     with col_clima:
         st.markdown("""
@@ -169,13 +165,11 @@ if st.session_state.page == 'Inicio':
     st.write("") # Espacio
 
     # --- SECCIÓN DESTACADOS CON FONDO DE ARICA ---
-    
-    # 1. Generamos el HTML (¡Corregido sin sangría para evitar que sea código!)
+    # Generamos el HTML sin sangrías
     places_html = ""
     for place in st.session_state.places:
         places_html += f"""<div class="place-item"><img src="{place['img']}"><div class="place-item-name">{place['name']}</div><div class="place-item-cat">{place['cat']}</div></div>"""
     
-    # 2. Renderizamos
     st.markdown(f"""
     <div class="destacados-container">
         <h3 style="color:white; margin-bottom: 20px;">🌟 Destacados de la Región</h3>
@@ -205,7 +199,7 @@ elif st.session_state.page == 'Explorar':
             st.checkbox("Añadir al viaje", value=place['id'] in st.session_state.favorites, key=f"chk_{place['id']}", on_change=toggle_favorite, args=(place['id'],))
             st.divider()
 
-# --- PÁGINA 3: PLANIFICADOR ---
+# --- PÁGINA 3: PLANIFICADOR (Con PDF e Imágenes) ---
 elif st.session_state.page == 'Planificador':
     st.title("📅 Planifica tu viaje")
     
@@ -222,11 +216,11 @@ elif st.session_state.page == 'Planificador':
         with c_map:
             st.map(pd.DataFrame(my_places), latitude='lat', longitude='lon', size=20, color='#0d8ca1')
         
-        # Generar PDF
+        # --- GENERACIÓN DE PDF CON IMÁGENES ---
         class PDF(FPDF):
             def header(self): pass
 
-        def generate_pdf(places, n_days):
+        def generate_pdf_with_images(places, n_days):
             pdf = PDF()
             pdf.add_page()
             pdf.set_font('Arial', 'B', 16)
@@ -238,7 +232,10 @@ elif st.session_state.page == 'Planificador':
             
             for d in range(n_days):
                 pdf.set_font('Arial', 'B', 14)
-                pdf.cell(0, 10, f'Día {d+1}', ln=True)
+                # Fondo gris claro para el encabezado del día
+                pdf.set_fill_color(240, 240, 240)
+                pdf.cell(0, 10, f'  Día {d+1}', ln=True, fill=True)
+                pdf.ln(4)
                 
                 day_places = places[d*items : (d+1)*items]
                 total_h = 0
@@ -249,25 +246,63 @@ elif st.session_state.page == 'Planificador':
                 
                 for p in day_places:
                     total_h += p['hours']
-                    pdf.set_font('Arial', 'B', 11)
-                    pdf.cell(5, 5, chr(149), ln=0)
-                    pdf.cell(0, 5, p['name'], ln=True)
                     
+                    # Guardamos la posición Y actual para alinear imagen y texto
+                    current_y = pdf.get_y()
+                    
+                    # 1. IMAGEN (Izquierda) - Cuadrado de 25x25 mm
+                    try:
+                        # Margen izquierdo 10, Y actual, Ancho 25, Alto 25
+                        pdf.image(p['img'], x=10, y=current_y, w=25, h=25)
+                    except:
+                        # Si falla la imagen (sin internet), dibuja un cuadro gris
+                        pdf.set_fill_color(220, 220, 220)
+                        pdf.rect(10, current_y, 25, 25, 'F')
+                    
+                    # 2. TEXTO (Derecha de la imagen)
+                    # Movemos el cursor a X=40 (10 margen + 25 imagen + 5 espacio)
+                    pdf.set_xy(40, current_y)
+                    
+                    # Nombre
+                    pdf.set_font('Arial', 'B', 11)
+                    pdf.cell(0, 6, p['name'], ln=True)
+                    
+                    # Ubicación
+                    pdf.set_x(40)
                     pdf.set_font('Arial', '', 10)
-                    pdf.set_x(15)
                     pdf.cell(0, 5, p['location'], ln=True)
-                    pdf.set_x(15)
-                    pdf.cell(0, 5, f"Tiempo: {p['time_str']}", ln=True)
-                    pdf.ln(2)
-                
+                    
+                    # Tiempo
+                    pdf.set_x(40)
+                    pdf.set_font('Arial', 'I', 9)
+                    pdf.set_text_color(100, 100, 100) # Gris oscuro para el tiempo
+                    pdf.cell(0, 5, f"Duración: {p['time_str']}", ln=True)
+                    pdf.set_text_color(0, 0, 0) # Volver a negro
+                    
+                    # 3. Espaciado para el siguiente item
+                    # Nos aseguramos de bajar lo suficiente (mínimo lo que mide la imagen + margen)
+                    next_y = current_y + 30 # 25 de imagen + 5 de margen
+                    # Si el texto ocupó más que la imagen, usamos la posición del texto (raro en este caso)
+                    if pdf.get_y() > next_y:
+                        next_y = pdf.get_y() + 5
+                        
+                    pdf.set_y(next_y)
+                    # Línea separadora sutil
+                    pdf.set_draw_color(230, 230, 230)
+                    pdf.line(10, next_y - 2, 200, next_y - 2)
+                    pdf.set_y(next_y)
+
+                # Total horas del día
                 if day_places:
                     pdf.ln(2)
-                    pdf.set_font('Arial', 'I', 10)
-                    pdf.cell(0, 5, f"Total estimado: {total_h} horas", ln=True)
-                pdf.ln(8)
+                    pdf.set_font('Arial', 'B', 10)
+                    pdf.cell(0, 6, f"Total estimado del día: {total_h} horas", ln=True, align='R')
+                
+                pdf.ln(8) # Espacio entre días
+
             return pdf.output(dest='S').encode('latin-1', 'replace')
 
         st.markdown("---")
-        pdf_data = generate_pdf(my_places, days)
+        pdf_data = generate_pdf_with_images(my_places, days)
         b64 = base64.b64encode(pdf_data).decode()
-        st.markdown(f'<a href="data:application/octet-stream;base64,{b64}" download="Itinerario_Arica.pdf" style="background-color:#0d8ca1; color:white; padding:10px 20px; border-radius:5px; text-decoration:none;">📥 Descargar PDF</a>', unsafe_allow_html=True)
+        st.markdown(f'<a href="data:application/octet-stream;base64,{b64}" download="Itinerario_Arica_Con_Fotos.pdf" style="background-color:#0d8ca1; color:white; padding:15px 25px; border-radius:8px; text-decoration:none; font-weight:bold; display:block; text-align:center;">📥 Descargar Itinerario con Fotos (PDF)</a>', unsafe_allow_html=True)
