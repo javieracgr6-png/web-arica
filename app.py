@@ -61,6 +61,7 @@ if 'places' not in st.session_state:
         {"id": 11, "name": "Presencias Tutelares", "cat": "Cultural", "img": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg0Rbukx0WSTPWXz2r19DIVFS2Kk8ezLtmq1n8hWLT0G-cheXUERy1bl-kozPeLoc3wgHyzOHL1iScRqm1HHdcmZvAWerHJeFwJ-O3B_uQNeHEJ8wyfFUsk3O_-3wc4oi3X42nAC5ptimU/s1600/_MG_1207.JPG", "desc": "Esculturas gigantes en el desierto.", "location": "Pampa de Chaca, Panamericana", "time_str": "1 hora", "hours": 1, "lat": -18.6667, "lon": -70.1833},
         {"id": 12, "name": "Playa La Lisera", "cat": "Playa", "img": "https://aricasiempreactiva.cl/wp-content/uploads/2020/11/Playa-La-Lisera-Arica-Vista-Panoramica-1900x785-1.jpg", "desc": "Ideal para familias y natación.", "location": "Sur de Arica", "time_str": "3 horas", "hours": 3, "lat": -18.4950, "lon": -70.3280},
         {"id": 13, "name": "Termas de Jurasi", "cat": "Relax", "img": "https://chileestuyo.cl/wp-content/uploads/2015/07/termas-de-jurasi.jpg", "desc": "Aguas termales medicinales.", "location": "Cerca de Putre", "time_str": "3 horas", "hours": 3, "lat": -18.2000, "lon": -69.5800},
+    ]
 
 # Gestión de Estado
 if 'favorites' not in st.session_state: st.session_state.favorites = []
