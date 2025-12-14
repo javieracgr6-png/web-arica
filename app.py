@@ -6,64 +6,65 @@ import tempfile
 import os
 
 # --- 1. CONFIGURACIÓN DE PÁGINA ---
-st.set_page_config(layout="wide", page_title="Descubre Arica y Parinacota", page_icon="🧭")
+st.set_page_config(layout="wide", page_title="Descubre Arica", page_icon="🧭")
 
-# --- 2. ESTILOS CSS ---
+# --- 2. ESTILOS CSS (DISEÑO) ---
 st.markdown("""
 <style>
-    :root { --primary-color: #008CBA; --bg-color: #0e1117; --text-color: #fafafa; }
+    /* Variables y Reset */
+    :root { --primary-color: #008CBA; }
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
-    
-    /* Títulos generales */
+
+    /* Títulos Principales en Azul */
     h1, h2, h3 { color: #008CBA !important; }
-    
-    /* Botones */
-    div.stButton > button { background-color: #008CBA; color: white; border-radius: 8px; border: none; font-weight: bold; }
-    div.stButton > button:hover { background-color: #005f7f; transform: scale(1.02); }
-    
-    /* Tarjetas (Cards) - Fondo Azul y Letras Blancas */
-    .card { 
-        background-color: #008CBA; 
-        color: white !important; 
-        padding: 20px; 
-        border-radius: 10px; 
-        border: none; 
-        box-shadow: 0 4px 6px rgba(0,0,0,0.3); 
-        margin-bottom: 20px; 
+
+    /* Botones Generales */
+    div.stButton > button {
+        background-color: #008CBA;
+        color: white;
+        border: none;
+        font-weight: bold;
     }
-    .card h1, .card h2, .card h3, .card p, .card span { color: white !important; }
-    
-    .hero-text { font-size: 3rem; font-weight: bold; text-align: center; margin-bottom: 1rem; background: -webkit-linear-gradient(white, #aaaaaa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    
-    /* --- BARRA DE NAVEGACIÓN (NAVBAR) CORREGIDA --- */
-    /* El contenedor principal (la caja) ahora es AZUL */
-    div.stRadio > div[role="radiogroup"] { 
-        justify-content: center; 
-        background-color: #008CBA !important; /* FONDO AZUL */
-        padding: 10px; 
-        border-radius: 15px; 
-        border: 2px solid #005f7f; 
-        margin-bottom: 25px; 
-    }
-    
-    /* El texto de las opciones (Inicio, Explorar...) ahora es BLANCO y NEGRITA */
-    div.stRadio > div[role="radiogroup"] label { 
-        color: white !important; /* LETRA BLANCA */
-        font-weight: bold !important; /* LETRA NEGRITA */
-        font-size: 1.1rem !important;
-    }
-    
-    /* Asegurar que los párrafos internos también sean blancos */
-    div.stRadio > div[role="radiogroup"] label p {
-        color: white !important;
-        font-weight: bold !important;
+    div.stButton > button:hover {
+        background-color: #005f7f;
     }
 
-    /* Efecto al pasar el mouse (hover) */
-    div.stRadio > div[role="radiogroup"] > label:hover { 
-        background-color: rgba(255,255,255,0.2) !important; 
+    /* --- CLASE PARA TARJETAS (CUADROS) AZULES --- */
+    .card {
+        background-color: #008CBA; /* Fondo Azul */
+        color: white !important;   /* Letras Blancas */
+        padding: 20px;
         border-radius: 10px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    }
+    /* Forzar color blanco a todo lo que esté dentro de la tarjeta */
+    .card h1, .card h2, .card h3, .card p, .card span, .card div {
+        color: white !important;
+    }
+
+    /* --- BARRA DE NAVEGACIÓN (NAVBAR) --- */
+    /* Fondo del contenedor de opciones */
+    div.stRadio > div[role="radiogroup"] {
+        background-color: #008CBA !important; /* Azul */
+        padding: 10px;
+        border-radius: 15px;
+        justify-content: center;
+        border: 2px solid #005f7f;
+    }
+
+    /* Texto de las opciones (Inicio, Explorar...) */
+    div.stRadio > div[role="radiogroup"] label p {
+        color: white !important;      /* Blanco */
+        font-weight: bold !important; /* Negrita */
+        font-size: 18px !important;   /* Tamaño legible */
+    }
+
+    /* Estado Hover (al pasar el mouse) */
+    div.stRadio > div[role="radiogroup"] label:hover {
+        background-color: rgba(255,255,255,0.2) !important;
+        border-radius: 8px;
     }
 
 </style>
@@ -86,10 +87,11 @@ data_turismo = [
     {"id": 13, "nombre": "Termas de Jurasi", "categoria": "Relax", "img": "https://chileestuyo.cl/wp-content/uploads/2015/07/termas-de-jurasi.jpg", "desc": "Aguas termales.", "ubicacion": "Cerca de Putre", "duracion": 3},
 ]
 
+# Inicializar variables de sesión
 if 'seleccionados' not in st.session_state: st.session_state.seleccionados = []
 if 'generado' not in st.session_state: st.session_state.generado = False
 
-# --- 4. FUNCIÓN GENERADORA DE PDF ---
+# --- 4. FUNCIÓN PDF ---
 class PDF(FPDF):
     def header(self):
         self.set_font('Arial', 'B', 18)
@@ -100,10 +102,11 @@ def generar_pdf_estilo_tarjeta(itinerario_dias):
     pdf = PDF()
     pdf.set_auto_page_break(auto=True, margin=15)
     pdf.add_page()
-    headers = {'User-Agent': 'Mozilla/5.0'}
+    headers = {'User-Agent': 'Mozilla/5.0'} # Para evitar bloqueo de imágenes
 
     for dia, items in itinerario_dias.items():
-        pdf.set_fill_color(240, 240, 240) 
+        # Encabezado Día
+        pdf.set_fill_color(240, 240, 240)
         pdf.set_font("Arial", "B", 12)
         pdf.cell(0, 10, f"  Día {dia}", ln=1, fill=True)
         pdf.ln(4)
@@ -111,6 +114,8 @@ def generar_pdf_estilo_tarjeta(itinerario_dias):
         for item in items:
             y_inicio = pdf.get_y()
             imagen_insertada = False
+            
+            # Intentar descargar imagen
             try:
                 response = requests.get(item['img'], headers=headers, stream=True, timeout=5)
                 if response.status_code == 200:
@@ -118,14 +123,17 @@ def generar_pdf_estilo_tarjeta(itinerario_dias):
                         for chunk in response.iter_content(1024):
                             tmp_file.write(chunk)
                         tmp_img_path = tmp_file.name
+                    
                     try:
                         pdf.image(tmp_img_path, x=10, y=y_inicio, w=40, h=30)
                         imagen_insertada = True
                     except: pass
+                    
                     try: os.unlink(tmp_img_path)
                     except: pass
             except: pass
 
+            # Si falla la imagen, cuadro gris
             if not imagen_insertada:
                 pdf.set_fill_color(220, 220, 220)
                 pdf.rect(10, y_inicio, 40, 30, 'F')
@@ -133,30 +141,50 @@ def generar_pdf_estilo_tarjeta(itinerario_dias):
                 pdf.set_font("Arial", "I", 8)
                 pdf.cell(40, 5, "Sin Foto", align='C')
 
+            # Texto detalles
             pdf.set_xy(55, y_inicio)
             pdf.set_font("Arial", "B", 12)
             pdf.cell(0, 6, item['nombre'], ln=2)
+            
             pdf.set_font("Arial", "", 10)
             pdf.set_text_color(80, 80, 80)
             pdf.cell(0, 5, item['ubicacion'], ln=2)
+            
             pdf.set_font("Arial", "I", 10)
             pdf.cell(0, 5, f"Duración: {item['duracion']} horas", ln=2)
+            
             pdf.set_text_color(0, 0, 0)
-            pdf.set_y(y_inicio + 35)
+            pdf.set_y(y_inicio + 35) # Espacio para el siguiente
+        
         pdf.ln(5)
     return pdf.output(dest='S').encode('latin-1')
 
-# --- 5. INTERFAZ ---
+# --- 5. INTERFAZ Y NAVEGACIÓN ---
+
+# Encabezado Logo
 col_logo, col_nav = st.columns([1, 3])
-with col_logo: st.markdown("### 🧭 Descubre Arica")
+with col_logo:
+    st.markdown("### 🧭 Descubre Arica")
+
+# Menú de Navegación Horizontal
 with col_nav:
-    opcion = st.radio("Navegación", ["🏠 Inicio", "🗺️ Explorar Atractivos", "📅 Planificador Inteligente"], horizontal=True, label_visibility="collapsed")
+    opcion = st.radio(
+        "Menu",
+        ["🏠 Inicio", "🗺️ Explorar Atractivos", "📅 Planificador Inteligente"],
+        horizontal=True,
+        label_visibility="collapsed"
+    )
+
 st.markdown("---")
 
+# --- LÓGICA DE PÁGINAS ---
+
 if "Inicio" in opcion:
-    st.markdown('<h1 class="hero-text">Descubre la magia del norte de Chile</h1>', unsafe_allow_html=True)
-    st.markdown("<h3 style='text-align: center; color: #ccc;'>Playas infinitas, valles fértiles, altiplano andino y cultura milenaria.</h3>", unsafe_allow_html=True)
+    # --- PÁGINA INICIO ---
+    st.markdown("<h1 style='text-align: center; color:#008CBA;'>Descubre la magia del norte de Chile</h1>", unsafe_allow_html=True)
+    st.markdown("<h3 style='text-align: center; color: #666;'>Playas infinitas, valles fértiles, altiplano andino y cultura milenaria.</h3>", unsafe_allow_html=True)
     st.write("")
+    
     col1, col2 = st.columns(2)
     with col1:
         st.markdown("""
@@ -166,22 +194,26 @@ if "Inicio" in opcion:
             <p>Soleado | Humedad 65%</p>
         </div>
         """, unsafe_allow_html=True)
+        
     with col2:
         st.markdown("""
         <div class="card">
             <h3 style="margin-top:0;">💲 Conversor</h3>
-            <p style="font-size:1.2rem;">1000 CLP = 1.07 USD</p>
-            <p style="font-size:0.9rem; opacity:0.8;">Dólar obs: $940</p>
+            <p style="font-size:1.5rem;">1000 CLP = 1.07 USD</p>
+            <p style="opacity:0.8;">Dólar observado: $940</p>
         </div>
         """, unsafe_allow_html=True)
-    
+        
     st.image("https://www.elmorrocotudo.cl/sites/elmorrocotudo.cl/files/imagen_noticia/morro-de-arica-1.jpg", use_container_width=True)
     st.info("💡 Tip: Ve a 'Explorar Atractivos' para comenzar.")
 
 elif "Explorar" in opcion:
+    # --- PÁGINA EXPLORAR ---
     col_title, col_count = st.columns([3, 1])
-    with col_title: st.title("🗺️ Atractivos Turísticos")
-    with col_count: st.metric(label="Seleccionados", value=len(st.session_state.seleccionados))
+    with col_title:
+        st.title("🗺️ Atractivos Turísticos")
+    with col_count:
+        st.metric(label="Seleccionados", value=len(st.session_state.seleccionados))
     
     filtro = st.selectbox("Filtrar por categoría:", ["Todos"] + sorted(list(set([x['categoria'] for x in data_turismo]))))
     items_mostrar = data_turismo if filtro == "Todos" else [x for x in data_turismo if x['categoria'] == filtro]
@@ -195,6 +227,7 @@ elif "Explorar" in opcion:
                 st.caption(f"📍 {item['ubicacion']}") 
                 st.write(f"_{item['desc']}_")
                 
+                # Checkbox de selección
                 is_selected = item['id'] in st.session_state.seleccionados
                 if st.checkbox(f"Visitar {item['nombre']}", value=is_selected, key=f"chk_{item['id']}"):
                     if item['id'] not in st.session_state.seleccionados:
@@ -206,14 +239,59 @@ elif "Explorar" in opcion:
                         st.rerun()
 
 elif "Planificador" in opcion:
+    # --- PÁGINA PLANIFICADOR ---
     st.title("📅 Planificador Inteligente")
+    
     if not st.session_state.seleccionados:
-        st.warning("⚠️ Primero selecciona atractivos en la pestaña Explorar.")
+        st.warning("⚠️ Primero selecciona atractivos en la pestaña 'Explorar Atractivos'.")
         st.stop()
 
     col_config, col_resumen = st.columns([1, 2])
+    
     with col_config:
-        st.markdown("""<div class="card">""", unsafe_allow_html=True)
+        # Configuración con fondo azul
+        st.markdown('<div class="card">', unsafe_allow_html=True)
         st.subheader("⚙️ Configuración")
+        
+        # Como los inputs de streamlit no heredan estilos fácil, usamos markdown para el título y dejamos el input normal
         dias = st.number_input("¿Días de visita?", min_value=1, max_value=7, value=3)
-        st.write(f"**Lugares ({len(st.session
+        
+        st.markdown(f"**Lugares seleccionados ({len(st.session_state.seleccionados)}):**", unsafe_allow_html=True)
+        for item in [d for d in data_turismo if d['id'] in st.session_state.seleccionados]:
+            st.markdown(f"- {item['nombre']}", unsafe_allow_html=True)
+            
+        st.write("")
+        if st.button("✨ Generar Itinerario", use_container_width=True):
+            st.session_state.generado = True
+            
+        st.markdown('</div>', unsafe_allow_html=True)
+
+    with col_resumen:
+        if st.session_state.get('generado'):
+            st.markdown("## 📋 Tu Itinerario Sugerido")
+            
+            items_obj = [d for d in data_turismo if d['id'] in st.session_state.seleccionados]
+            import math
+            items_por_dia = math.ceil(len(items_obj) / dias)
+            
+            itinerario_final = {}
+            idx_item = 0
+            
+            for dia in range(1, dias + 1):
+                itinerario_final[dia] = []
+                with st.expander(f"📅 Día {dia}", expanded=True):
+                    for _ in range(items_por_dia):
+                        if idx_item < len(items_obj):
+                            act = items_obj[idx_item]
+                            itinerario_final[dia].append(act)
+                            
+                            c1, c2 = st.columns([1, 4])
+                            c1.image(act['img'], use_container_width=True)
+                            c2.markdown(f"**{act['nombre']}**")
+                            c2.caption(f"📍 {act['ubicacion']} | ⏱️ {act['duracion']}h")
+                            idx_item += 1
+
+            # Generar PDF
+            pdf_bytes = generar_pdf_estilo_tarjeta(itinerario_final)
+            st.success("✅ ¡Itinerario listo!")
+            st.download_button("📥 Descargar PDF (Con Fotos)", data=pdf_bytes, file_name="Itinerario_Arica.pdf", mime="application/pdf", use_container_width=True)
