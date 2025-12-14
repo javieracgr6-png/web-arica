@@ -86,8 +86,8 @@ data_turismo = [
     {"id": 11, "nombre": "Presencias Tutelares", "categoria": "Cultural", "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZNJLnQYD5CQe9PlS16g1dxgcjlOSj_6jj5A&s", "desc": "Esculturas gigantes.", "ubicacion": "Pampa de Chaca", "duracion": 1, "lat": -18.6667, "lon": -70.1833},
     {"id": 12, "nombre": "Playa La Lisera", "categoria": "Playa", "img": "https://aricasiempreactiva.cl/wp-content/uploads/elementor/thumbs/Playa-La-Lisera-Arica-Vista-Panoramica-1900x785-1-p46ftwempmah0fol2yf2f2g1pnxq4tium3jzc7g80w.jpg", "desc": "Familiar.", "ubicacion": "Sur de Arica", "duracion": 3, "lat": -18.4950, "lon": -70.3280},
     {"id": 13, "nombre": "Termas de Jurasi", "categoria": "Relax", "img": "https://chileestuyo.cl/wp-content/uploads/2015/07/termas-de-jurasi.jpg", "desc": "Aguas termales.", "ubicacion": "Cerca de Putre", "duracion": 3, "lat": -18.2000, "lon": -69.5800},
-    {"id": 14, "nombre": "Salar de Surire", "categoria": "Naturaleza", "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Salar_de_Surire_2.jpg/640px-Salar_de_Surire_2.jpg", "desc": "Monumento natural, flamencos y termas.", "ubicacion": "Altiplano Andino", "duracion": 10, "lat": -18.8415, "lon": -69.0604},
-    {"id": 15, "nombre": "La Ex Aduana", "categoria": "Histórico", "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Ex_Aduana_de_Arica.jpg/640px-Ex_Aduana_de_Arica.jpg", "desc": "Casa de la Cultura, arquitectura histórica.", "ubicacion": "Centro de Arica", "duracion": 1, "lat": -18.4795, "lon": -70.3236},
+    {"id": 14, "nombre": "Salar de Surire", "categoria": "Naturaleza", "img": "https://www.civitatis.com/f/chile/putre/excursion-salar-surire-589x392.jpg", "desc": "Monumento natural, flamencos y termas.", "ubicacion": "Altiplano Andino", "duracion": 10, "lat": -18.8415, "lon": -69.0604},
+    {"id": 15, "nombre": "La Ex Aduana", "categoria": "Histórico", "img": "https://chileestuyo.cl/wp-content/uploads/2023/11/Ex-Aduana.png", "desc": "Casa de la Cultura, arquitectura histórica.", "ubicacion": "Centro de Arica", "duracion": 1, "lat": -18.4795, "lon": -70.3236},
 ]
 
 # Inicializar variables de sesión
