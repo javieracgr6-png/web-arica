@@ -152,7 +152,6 @@ def mostrar_detalle(place):
         toggle_favorite(place['id'])
         st.rerun()
 
-
 def descargar_imagen(url):
     try:
         headers = {'User-Agent': 'Mozilla/5.0'}
@@ -280,6 +279,7 @@ elif st.session_state.page == 'Planificador':
         st.divider()
         st.subheader("📥 Descargar Itinerario")
         
+        # Función para crear el PDF
         def generar_pdf():
             pdf = FPDF()
             pdf.add_page()
@@ -322,7 +322,8 @@ elif st.session_state.page == 'Planificador':
                     pdf.ln(15)
             return pdf.output(dest='S').encode('latin-1', 'replace')
 
-       if st.button("📄 Generar PDF con fotos"):
+        # El botón para descargar
+        if st.button("📄 Generar PDF con fotos"):
             with st.spinner("Creando tu guía personalizada..."):
                 pdf_bytes = generar_pdf()
                 b64 = base64.b64encode(pdf_bytes).decode()
