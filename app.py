@@ -4,9 +4,9 @@ from fpdf import FPDF
 import base64
 
 # 1. Configuración de la página
-st.set_page_config(layout="wide", page_title="Descubre Arica y Parinacota", page_icon="🏔️")
+st.set_page_config(layout="wide", page_title="Descubre Arica", page_icon="🏔️")
 
-# 2. Estilos CSS (CORREGIDO PARA QUE SE VEAN LAS LETRAS)
+# 2. Estilos CSS (Actualizados con el fondo para Destacados)
 st.markdown("""
 <style>
     .main { background-color: #f8f9fa; }
@@ -25,23 +25,61 @@ st.markdown("""
         background-size: cover; background-position: center; padding: 80px 40px; border-radius: 15px; color: white; margin-bottom: 30px;
     }
     
-    /* Cajas de Info (Clima/Divisas) - CORRECCIÓN DE COLOR DE TEXTO */
+    /* Cajas de Info (Clima/Divisas) */
     .info-box {
-        background-color: white; 
-        padding: 20px; 
-        border-radius: 10px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.05); 
-        border: 1px solid #e0e0e0; 
-        height: 100%;
+        background-color: white; padding: 20px; border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05); border: 1px solid #e0e0e0; height: 100%;
+        color: #333333;
     }
-    
-    /* Forzamos que TODO el texto dentro de info-box sea oscuro */
-    .info-box, .info-box h5, .info-box p, .info-box span, .info-box div {
-        color: #333333 !important;
-    }
-    
-    /* Texto específico del precio */
+    .info-box h5, .info-box p, .info-box div, .info-box span, .info-box label { color: #333333 !important; }
     .price-text { font-size: 24px; font-weight: bold; color: #0d8ca1 !important; }
+    .custom-label { font-size: 14px; font-weight: bold; color: #333333 !important; margin-bottom: 5px; display: block; }
+
+    /* --- NUEVO ESTILO PARA LA SECCIÓN DESTACADOS --- */
+    .destacados-container {
+        /* Imagen de fondo del Morro con una capa oscura encima para legibilidad */
+        background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Morro_de_arica_view.jpg/1280px-Morro_de_arica_view.jpg');
+        background-size: cover;
+        background-position: center;
+        padding: 30px;
+        border-radius: 15px;
+        margin-top: 30px;
+        color: white !important; /* Texto blanco */
+    }
+    /* Estilo para el mensaje de alerta personalizado dentro del contenedor */
+    .custom-alert {
+        background-color: rgba(255, 255, 255, 0.15);
+        border-left: 5px solid #0d8ca1;
+        padding: 15px;
+        border-radius: 5px;
+        margin-bottom: 25px;
+        font-size: 1.1rem;
+    }
+    /* Cuadrícula para las imágenes dentro del contenedor */
+    .places-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Columnas responsivas */
+        gap: 20px;
+    }
+    /* Estilo de cada item de lugar */
+    .place-item {
+        background-color: rgba(0,0,0,0.4);
+        border-radius: 10px;
+        overflow: hidden;
+        text-align: center;
+        padding-bottom: 10px;
+        border: 1px solid rgba(255,255,255,0.1);
+        transition: transform 0.2s;
+    }
+    .place-item:hover { transform: scale(1.03); }
+    .place-item img {
+        width: 100%;
+        height: 140px;
+        object-fit: cover;
+        border-bottom: 3px solid #0d8ca1;
+    }
+    .place-item-name { font-weight: bold; margin: 10px 0 5px 0; font-size: 15px; }
+    .place-item-cat { font-size: 13px; color: #ddd; text-transform: uppercase; letter-spacing: 1px; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -90,22 +128,21 @@ if st.session_state.page == 'Inicio':
     # Hero
     st.markdown("""<div class="hero"><h1>Descubre la magia del norte de Chile</h1><p>Playas infinitas, valles fértiles, altiplano andino y milenaria cultura. Todo en un solo destino.</p></div>""", unsafe_allow_html=True)
     
-    # Clima y Divisas
+    # Clima y Divisas (HTML Puro)
     col_clima, col_divisas = st.columns(2)
     with col_clima:
-        # Usamos HTML puro para garantizar que el texto sea negro y no dependa del tema de Streamlit
         st.markdown("""
         <div class="info-box">
-            <h5>☁️ Clima Actual - Arica</h5>
+            <h5 style="color:#333; margin-bottom:15px;">☁️ Clima Actual - Arica</h5>
             <div style="display: flex; align-items: center; justify-content: space-around;">
-                <div style="font-size: 40px;">☀️</div>
+                <div style="font-size: 45px;">☀️</div>
                 <div style="text-align: center;">
-                    <div style="font-size: 16px;">Soleado</div>
-                    <div style="font-size: 32px; font-weight: bold;">22°C</div>
+                    <div style="font-size: 16px; color:#333;">Soleado</div>
+                    <div style="font-size: 36px; font-weight: bold; color:#333;">22°C</div>
                 </div>
-                <div style="font-size: 14px; color: #555;">
-                    💧 Humedad: 65%<br>
-                    🍃 Viento: 12 km/h
+                <div style="font-size: 14px; color: #555; border-left: 2px solid #eee; padding-left: 15px;">
+                    <div>💧 Humedad: 65%</div>
+                    <div style="margin-top:5px;">🍃 Viento: 12 km/h</div>
                 </div>
             </div>
         </div>
@@ -113,29 +150,49 @@ if st.session_state.page == 'Inicio':
 
     with col_divisas:
         st.markdown('<div class="info-box">', unsafe_allow_html=True)
-        st.markdown("<h5>💲 Conversor</h5>", unsafe_allow_html=True)
-        
-        # Inputs nativos de Streamlit (se adaptan, pero el fondo es blanco)
-        amount = st.number_input("Monto", 1000, 100000, 1000)
-        st.markdown(f"""
-        <div style="margin-top: 10px;">
-            Aprox: <span class="price-text">${amount/935:,.2f} USD</span>
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown('<h5 style="color:#333;">💲 Conversor</h5>', unsafe_allow_html=True)
+        st.markdown('<span class="custom-label">Monto a convertir</span>', unsafe_allow_html=True)
+        amount = st.number_input("Monto", 1000, 100000, 1000, label_visibility="collapsed")
+        cc1, cc2 = st.columns(2)
+        with cc1:
+            st.markdown('<span class="custom-label">De</span>', unsafe_allow_html=True)
+            c_from = st.selectbox("De", ["CLP", "USD"], label_visibility="collapsed")
+        with cc2:
+            st.markdown('<span class="custom-label">A</span>', unsafe_allow_html=True)
+            c_to = st.selectbox("A", ["USD", "CLP"], label_visibility="collapsed")
+        res = amount
+        if c_from == "CLP" and c_to == "USD": res = amount / 935
+        elif c_from == "USD" and c_to == "CLP": res = amount * 935
+        st.markdown(f"""<div style="margin-top: 20px; text-align: right;"><span style="color:#555; font-size:14px;">Resultado estimado:</span><br><span class="price-text">${res:,.2f} {c_to}</span></div>""", unsafe_allow_html=True)
         st.markdown('</div>', unsafe_allow_html=True)
 
-    # SECCIÓN DESTACADOS
-    st.write("")
-    st.subheader("🌟 Destacados de la Región")
-    st.info("💡 **Tip:** Ve a la pestaña **'Explorar'** para seleccionar tus lugares favoritos y generar tu itinerario automático.")
+    st.write("") # Espacio
+
+    # --- SECCIÓN DESTACADOS CON FONDO DE ARICA ---
     
-    # Galería visual
-    cols = st.columns(4)
-    for i, place in enumerate(st.session_state.places):
-        with cols[i % 4]:
-            st.image(place['img'], use_container_width=True)
-            st.markdown(f"**{place['name']}**")
-            st.caption(place['cat'])
+    # 1. Generamos el HTML de las imágenes primero
+    places_html = ""
+    for place in st.session_state.places:
+        places_html += f"""
+        <div class="place-item">
+            <img src="{place['img']}">
+            <div class="place-item-name">{place['name']}</div>
+            <div class="place-item-cat">{place['cat']}</div>
+        </div>
+        """
+    
+    # 2. Renderizamos el contenedor completo con el fondo, título, alerta y las imágenes
+    st.markdown(f"""
+    <div class="destacados-container">
+        <h3 style="color:white; margin-bottom: 20px;">🌟 Destacados de la Región</h3>
+        <div class="custom-alert">
+            💡 <strong>Tip:</strong> Ve a la pestaña <strong>'Explorar'</strong> para seleccionar tus lugares favoritos y generar tu itinerario automático.
+        </div>
+        <div class="places-grid">
+            {places_html}
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
 
 # --- PÁGINA 2: EXPLORAR ---
 elif st.session_state.page == 'Explorar':
