@@ -88,7 +88,7 @@ st.divider()
 # --- PÁGINA 1: INICIO ---
 if st.session_state.page == 'Inicio':
     # Hero
-    st.markdown("""<div class="hero"><h1>Descubre la magia del norte de Chile</h1><p>Playas infinitas, valles fértiles y cultura milenaria.</p></div>""", unsafe_allow_html=True)
+    st.markdown("""<div class="hero"><h1>Descubre la magia del norte de Chile</h1><p>Playas infinitas, valles fértiles, altiplano andino y milenaria cultura. Todo en un solo destino.</p></div>""", unsafe_allow_html=True)
     
     # Clima y Divisas
     col_clima, col_divisas = st.columns(2)
