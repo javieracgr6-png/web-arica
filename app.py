@@ -6,7 +6,7 @@ import tempfile
 import os
 
 # --- 1. CONFIGURACIÓN DE PÁGINA ---
-st.set_page_config(layout="wide", page_title="Descubre Arica", page_icon="🧭")
+st.set_page_config(layout="wide", page_title="Arica Smart Tour", page_icon="🧭")
 
 # --- 2. ESTILOS CSS (DISEÑO) ---
 st.markdown("""
@@ -70,21 +70,23 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# --- 3. DATOS DE LOS ATRACTIVOS ---
+# --- 3. DATOS DE LOS ATRACTIVOS (CON COORDENADAS) ---
 data_turismo = [
-    {"id": 1, "nombre": "Morro de Arica", "categoria": "Histórico", "img": "https://www.elmorrocotudo.cl/sites/elmorrocotudo.cl/files/imagen_noticia/morro-de-arica-1.jpg", "desc": "Icono de la ciudad.", "ubicacion": "Centro de Arica", "duracion": 2},
-    {"id": 2, "nombre": "Lago Chungará", "categoria": "Naturaleza", "img": "https://media.istockphoto.com/id/1210936595/es/foto/alpacas-graze-in-lauca-national-park-near-putre-chile.jpg?s=612x612&w=0&k=20&c=0BcUvoFlyaXc40jTaAm_hmmcpPTFteKLoCDhwXrJaWE=", "desc": "Lago de altura.", "ubicacion": "Altiplano, Parque Lauca", "duracion": 8},
-    {"id": 3, "nombre": "Cuevas de Anzota", "categoria": "Aventura", "img": "https://www.costachinchorro.cl/ccc23/wp-content/uploads/2019/01/DSCF6574-e1548174607840-1200x600.jpg", "desc": "Formaciones geológicas.", "ubicacion": "Sector sur, a 12 km", "duracion": 3},
-    {"id": 4, "nombre": "Pueblo de Putre", "categoria": "Cultural", "img": "https://laravel-production-storage1-oddrmnfoicay.s3.amazonaws.com/actividades/Putre%20%282%29.jpg", "desc": "Capital de Parinacota.", "ubicacion": "Precordillera", "duracion": 4},
-    {"id": 5, "nombre": "Museo Arqueológico", "categoria": "Cultural", "img": "https://www.registromuseoschile.cl/663/articles-50828_imagen_portada.thumb_i_portada.jpg", "desc": "Momias Chinchorro.", "ubicacion": "Valle de Azapa", "duracion": 3},
-    {"id": 6, "nombre": "Catedral San Marcos", "categoria": "Histórico", "img": "https://www.monumentos.gob.cl/sites/default/files/image-monumentos/00381_mh_15101-24.jpg", "desc": "Obra de Eiffel.", "ubicacion": "Plaza Colón", "duracion": 1},
-    {"id": 7, "nombre": "Humedal Río Lluta", "categoria": "Naturaleza", "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAvTXRKiBi3FRCJgeetShO2TuwcY5CIq4zfg&s", "desc": "Santuario de aves.", "ubicacion": "Desembocadura", "duracion": 2},
-    {"id": 8, "nombre": "Parque Nacional Lauca", "categoria": "Naturaleza", "img": "https://www.conaf.cl/wp-content/uploads/2024/01/Lago-Chungara-PArque-Nacional-Lauca-sernatur-ATR22-1.jpg", "desc": "Volcanes y fauna.", "ubicacion": "Altiplano", "duracion": 9},
-    {"id": 9, "nombre": "Playa Chinchorro", "categoria": "Playa", "img": "https://www.aricaldia.cl/wp-content/uploads/2020/01/playa_chinchorro.jpg", "desc": "Aguas cálidas.", "ubicacion": "Zona Norte", "duracion": 3},
-    {"id": 10, "nombre": "Playa El Laucho", "categoria": "Playa", "img": "https://www.revistagente.com/wp-content/uploads/2023/12/playa-el-laucho.jpeg.webp", "desc": "Oleaje suave.", "ubicacion": "Av. San Martín", "duracion": 3},
-    {"id": 11, "nombre": "Presencias Tutelares", "categoria": "Cultural", "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZNJLnQYD5CQe9PlS16g1dxgcjlOSj_6jj5A&s", "desc": "Esculturas gigantes.", "ubicacion": "Pampa de Chaca", "duracion": 1},
-    {"id": 12, "nombre": "Playa La Lisera", "categoria": "Playa", "img": "https://aricasiempreactiva.cl/wp-content/uploads/elementor/thumbs/Playa-La-Lisera-Arica-Vista-Panoramica-1900x785-1-p46ftwempmah0fol2yf2f2g1pnxq4tium3jzc7g80w.jpg", "desc": "Familiar.", "ubicacion": "Sur de Arica", "duracion": 3},
-    {"id": 13, "nombre": "Termas de Jurasi", "categoria": "Relax", "img": "https://chileestuyo.cl/wp-content/uploads/2015/07/termas-de-jurasi.jpg", "desc": "Aguas termales.", "ubicacion": "Cerca de Putre", "duracion": 3},
+    {"id": 1, "nombre": "Morro de Arica", "categoria": "Histórico", "img": "https://www.elmorrocotudo.cl/sites/elmorrocotudo.cl/files/imagen_noticia/morro-de-arica-1.jpg", "desc": "Icono de la ciudad.", "ubicacion": "Centro de Arica", "duracion": 2, "lat": -18.4802, "lon": -70.3250},
+    {"id": 2, "nombre": "Lago Chungará", "categoria": "Naturaleza", "img": "https://media.istockphoto.com/id/1210936595/es/foto/alpacas-graze-in-lauca-national-park-near-putre-chile.jpg?s=612x612&w=0&k=20&c=0BcUvoFlyaXc40jTaAm_hmmcpPTFteKLoCDhwXrJaWE=", "desc": "Lago de altura.", "ubicacion": "Altiplano, Parque Lauca", "duracion": 8, "lat": -18.2500, "lon": -69.1667},
+    {"id": 3, "nombre": "Cuevas de Anzota", "categoria": "Aventura", "img": "https://www.costachinchorro.cl/ccc23/wp-content/uploads/2019/01/DSCF6574-e1548174607840-1200x600.jpg", "desc": "Formaciones geológicas.", "ubicacion": "Sector sur, a 12 km", "duracion": 3, "lat": -18.5500, "lon": -70.3300},
+    {"id": 4, "nombre": "Pueblo de Putre", "categoria": "Cultural", "img": "https://laravel-production-storage1-oddrmnfoicay.s3.amazonaws.com/actividades/Putre%20%282%29.jpg", "desc": "Capital de Parinacota.", "ubicacion": "Precordillera", "duracion": 4, "lat": -18.1950, "lon": -69.5600},
+    {"id": 5, "nombre": "Museo Arqueológico", "categoria": "Cultural", "img": "https://www.registromuseoschile.cl/663/articles-50828_imagen_portada.thumb_i_portada.jpg", "desc": "Momias Chinchorro.", "ubicacion": "Valle de Azapa", "duracion": 3, "lat": -18.5150, "lon": -70.1800},
+    {"id": 6, "nombre": "Catedral San Marcos", "categoria": "Histórico", "img": "https://www.monumentos.gob.cl/sites/default/files/image-monumentos/00381_mh_15101-24.jpg", "desc": "Obra de Eiffel.", "ubicacion": "Plaza Colón", "duracion": 1, "lat": -18.4779, "lon": -70.3207},
+    {"id": 7, "nombre": "Humedal Río Lluta", "categoria": "Naturaleza", "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAvTXRKiBi3FRCJgeetShO2TuwcY5CIq4zfg&s", "desc": "Santuario de aves.", "ubicacion": "Desembocadura", "duracion": 2, "lat": -18.4167, "lon": -70.3167},
+    {"id": 8, "nombre": "Parque Nacional Lauca", "categoria": "Naturaleza", "img": "https://www.conaf.cl/wp-content/uploads/2024/01/Lago-Chungara-PArque-Nacional-Lauca-sernatur-ATR22-1.jpg", "desc": "Volcanes y fauna.", "ubicacion": "Altiplano", "duracion": 9, "lat": -18.1833, "lon": -69.2333},
+    {"id": 9, "nombre": "Playa Chinchorro", "categoria": "Playa", "img": "https://www.aricaldia.cl/wp-content/uploads/2020/01/playa_chinchorro.jpg", "desc": "Aguas cálidas.", "ubicacion": "Zona Norte", "duracion": 3, "lat": -18.4550, "lon": -70.3000},
+    {"id": 10, "nombre": "Playa El Laucho", "categoria": "Playa", "img": "https://www.revistagente.com/wp-content/uploads/2023/12/playa-el-laucho.jpeg.webp", "desc": "Oleaje suave.", "ubicacion": "Av. San Martín", "duracion": 3, "lat": -18.4880, "lon": -70.3250},
+    {"id": 11, "nombre": "Presencias Tutelares", "categoria": "Cultural", "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZNJLnQYD5CQe9PlS16g1dxgcjlOSj_6jj5A&s", "desc": "Esculturas gigantes.", "ubicacion": "Pampa de Chaca", "duracion": 1, "lat": -18.6667, "lon": -70.1833},
+    {"id": 12, "nombre": "Playa La Lisera", "categoria": "Playa", "img": "https://aricasiempreactiva.cl/wp-content/uploads/elementor/thumbs/Playa-La-Lisera-Arica-Vista-Panoramica-1900x785-1-p46ftwempmah0fol2yf2f2g1pnxq4tium3jzc7g80w.jpg", "desc": "Familiar.", "ubicacion": "Sur de Arica", "duracion": 3, "lat": -18.4950, "lon": -70.3280},
+    {"id": 13, "nombre": "Termas de Jurasi", "categoria": "Relax", "img": "https://chileestuyo.cl/wp-content/uploads/2015/07/termas-de-jurasi.jpg", "desc": "Aguas termales.", "ubicacion": "Cerca de Putre", "duracion": 3, "lat": -18.2000, "lon": -69.5800},
+    {"id": 14, "nombre": "Salar de Surire", "categoria": "Naturaleza", "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Salar_de_Surire_2.jpg/640px-Salar_de_Surire_2.jpg", "desc": "Monumento natural, flamencos y termas.", "ubicacion": "Altiplano Andino", "duracion": 10, "lat": -18.8415, "lon": -69.0604},
+    {"id": 15, "nombre": "La Ex Aduana", "categoria": "Histórico", "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Ex_Aduana_de_Arica.jpg/640px-Ex_Aduana_de_Arica.jpg", "desc": "Casa de la Cultura, arquitectura histórica.", "ubicacion": "Centro de Arica", "duracion": 1, "lat": -18.4795, "lon": -70.3236},
 ]
 
 # Inicializar variables de sesión
@@ -237,6 +239,23 @@ elif "Explorar" in opcion:
                     if item['id'] in st.session_state.seleccionados:
                         st.session_state.seleccionados.remove(item['id'])
                         st.rerun()
+    
+    # --- SECCIÓN DEL MAPA (NUEVA) ---
+    st.markdown("---")
+    st.subheader("🗺️ Mapa de tu ruta turística")
+    
+    # Filtrar datos para el mapa: Si hay seleccionados, mostrar solo esos. Si no, mostrar todos.
+    if st.session_state.seleccionados:
+        map_data = [d for d in data_turismo if d['id'] in st.session_state.seleccionados]
+        st.info(f"Mostrando {len(map_data)} lugares seleccionados en el mapa.")
+    else:
+        map_data = data_turismo
+        st.caption("Mostrando todos los atractivos (Selecciona arriba para filtrar el mapa).")
+
+    # Crear DataFrame para el mapa (requiere columnas 'lat' y 'lon')
+    df_map = pd.DataFrame(map_data)
+    if not df_map.empty:
+        st.map(df_map, zoom=10)
 
 elif "Planificador" in opcion:
     # --- PÁGINA PLANIFICADOR ---
@@ -253,7 +272,6 @@ elif "Planificador" in opcion:
         st.markdown('<div class="card">', unsafe_allow_html=True)
         st.subheader("⚙️ Configuración")
         
-        # Como los inputs de streamlit no heredan estilos fácil, usamos markdown para el título y dejamos el input normal
         dias = st.number_input("¿Días de visita?", min_value=1, max_value=7, value=3)
         
         st.markdown(f"**Lugares seleccionados ({len(st.session_state.seleccionados)}):**", unsafe_allow_html=True)
