@@ -13,12 +13,13 @@ st.set_page_config(layout="wide", page_title="Arica Smart Tour", page_icon="🦙
 # --- 2. ESTILOS CSS (DISEÑO) ---
 st.markdown("""
 <style>
-    .main { background-color: #f8f9fa; }
-    h1, h2, h3 { color: #2c3e50; }
+    /* Ajustes para modo oscuro/claro */
+    .main { background-color: #0e1117; color: white; }
+    h1, h2, h3, p, div { color: white; }
     
-    /* Hero Section */
+    /* Hero Section con imagen de fondo */
     .hero {
-        background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1599933256241-7e8c33959957?w=1200&q=80');
+        background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1599933256241-7e8c33959957?w=1200&q=80');
         background-size: cover;
         background-position: center;
         padding: 60px;
@@ -26,306 +27,272 @@ st.markdown("""
         color: white;
         text-align: center;
         margin-bottom: 30px;
+        border: 1px solid #333;
     }
     
-    /* Estilo para los botones de las tarjetas */
-    div.stButton > button:first-child {
+    /* Estilo de los Botones */
+    div.stButton > button {
         background-color: #008CBA;
         color: white;
-        border-radius: 8px;
+        border-radius: 5px;
         border: none;
         width: 100%;
+        font-weight: bold;
     }
     div.stButton > button:hover {
         background-color: #007399;
+        border-color: #007399;
         color: white;
+    }
+    
+    /* Ajuste de imágenes en tarjetas */
+    img {
+        border-radius: 5px;
     }
 </style>
 """, unsafe_allow_html=True)
 
-# --- 3. DATOS (Actualizados con Precio e Ideal Para) ---
+# --- 3. DATOS ---
 if 'places' not in st.session_state:
     st.session_state.places = [
         {
-            "id": 1, "name": "Morro de Arica", "cat": "Ciudad", 
+            "id": 1, "name": "Morro de Arica", "cat": "HISTÓRICO", 
             "img": "https://images.unsplash.com/photo-1599933256241-7e8c33959957?w=800&q=80", 
-            "desc": "El guardián de la ciudad. Ofrece una vista panorámica inigualable del océano y el puerto. Cuenta con un museo de sitio histórico.", 
-            "price": "Gratis (Museo: $2.000 CLP)", "ideal": "Familia, Fotografía, Historia",
-            "lat": -18.4811, "lon": -70.3253
+            "desc": "El guardián de la ciudad. Ofrece una vista panorámica inigualable del océano y el puerto.", 
+            "price": "Gratis", "ideal": "Familia, Historia", "lat": -18.4811, "lon": -70.3253
         },
         {
-            "id": 2, "name": "Lago Chungará", "cat": "Altiplano", 
+            "id": 2, "name": "Lago Chungará", "cat": "NATURALEZA", 
             "img": "https://images.unsplash.com/photo-1518182170546-0766ce6fec9d?w=800&q=80", 
-            "desc": "Uno de los lagos más altos del mundo a 4.500 msnm. Rodeado de volcanes y fauna como alpacas y flamencos.", 
-            "price": "Gratis (Tour aprox $45.000)", "ideal": "Aventura, Naturaleza, Trekking",
-            "lat": -18.2497, "lon": -69.1750
+            "desc": "Uno de los lagos más altos del mundo a 4.500 msnm. Rodeado de volcanes.", 
+            "price": "Gratis", "ideal": "Aventura, Trekking", "lat": -18.2497, "lon": -69.1750
         },
         {
-            "id": 3, "name": "Cuevas de Anzota", "cat": "Costa", 
+            "id": 3, "name": "Cuevas de Anzota", "cat": "AVENTURA", 
             "img": "https://images.unsplash.com/photo-1534067783865-24b5d7d3d0f9?w=800&q=80", 
-            "desc": "Impresionantes formaciones geológicas con senderos habilitados frente al mar. Ideal para caminar y sentir la brisa.", 
-            "price": "Gratis", "ideal": "Caminata, Fotografía, Geología",
-            "lat": -18.5539, "lon": -70.3344
+            "desc": "Impresionantes formaciones geológicas con senderos frente al mar.", 
+            "price": "Gratis", "ideal": "Caminata, Geología", "lat": -18.5539, "lon": -70.3344
         },
         {
-            "id": 4, "name": "Pueblo de Putre", "cat": "Altiplano", 
+            "id": 4, "name": "Pueblo de Putre", "cat": "CULTURAL", 
             "img": "https://images.unsplash.com/photo-1544254471-294747d51939?w=800&q=80", 
-            "desc": "Capital de la provincia de Parinacota. Un pueblo histórico colonial que sirve de puerta de entrada al Parque Lauca.", 
-            "price": "Gratis", "ideal": "Cultura, Aclimatación, Historia",
-            "lat": -18.1950, "lon": -69.5597
+            "desc": "Capital de la provincia de Parinacota. Pueblo histórico colonial.", 
+            "price": "Gratis", "ideal": "Cultura, Aclimatación", "lat": -18.1950, "lon": -69.5597
         },
         {
-            "id": 5, "name": "Museo Momias Chinchorro", "cat": "Valle", 
+            "id": 5, "name": "Museo Arqueológico", "cat": "CULTURAL", 
             "img": "https://images.unsplash.com/photo-1566417728795-0728c3104629?w=800&q=80", 
-            "desc": "Hogar de la cultura Chinchorro y sus momias artificiales, las más antiguas del mundo (7.000 años).", 
-            "price": "$3.000 CLP", "ideal": "Cultura, Historia, Estudiantes",
-            "lat": -18.5186, "lon": -70.1837
+            "desc": "Hogar de la cultura Chinchorro y sus momias artificiales.", 
+            "price": "$3.000 CLP", "ideal": "Cultura, Historia", "lat": -18.5186, "lon": -70.1837
         },
         {
-            "id": 6, "name": "Parque Nacional Lauca", "cat": "Altiplano", 
-            "img": "https://images.unsplash.com/photo-1465220183275-1faa863377e3?w=800&q=80", 
-            "desc": "Reserva mundial de la biosfera. Volcanes nevados, bofedales y vicuñas en su hábitat natural.", 
-            "price": "Gratis", "ideal": "Naturaleza, Fotografía, Relax",
-            "lat": -18.1833, "lon": -69.2667
-        },
-        {
-            "id": 7, "name": "Playa Chinchorro", "cat": "Costa", 
-            "img": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80", 
-            "desc": "Extensa playa de aguas cálidas, ideal para bañarse, practicar deportes y disfrutar del atardecer.", 
-            "price": "Gratis", "ideal": "Familia, Deporte, Playa",
-            "lat": -18.4556, "lon": -70.2980
-        },
-        {
-            "id": 8, "name": "Termas de Jurasi", "cat": "Altiplano", 
-            "img": "https://images.unsplash.com/photo-1572506893693-e380f9cb650a?w=800&q=80", 
-            "desc": "Aguas termales de origen volcánico con propiedades medicinales. Cuenta con piscinas rústicas.", 
-            "price": "$2.000 - $4.000 CLP", "ideal": "Salud, Relax, Adultos Mayores",
-            "lat": -18.2081, "lon": -69.5694
-        },
-        {
-            "id": 9, "name": "Presencias Tutelares", "cat": "Pampa", 
-            "img": "https://images.unsplash.com/photo-1623525283464-328639556394?w=800&q=80", 
-            "desc": "Gigantescas esculturas en medio del desierto. Un lugar místico bajo las estrellas.", 
-            "price": "Gratis", "ideal": "Arte, Astronomía, Fotografía",
-            "lat": -18.5750, "lon": -70.2217
-        },
-        {
-            "id": 10, "name": "Humedal Río Lluta", "cat": "Costa", 
+            "id": 6, "name": "Catedral San Marcos", "cat": "HISTÓRICO", 
             "img": "https://images.unsplash.com/photo-1596483957297-c6b653457a4e?w=800&q=80", 
-            "desc": "Santuario de la naturaleza en la desembocadura del río. Avistamiento de cientos de aves migratorias.", 
-            "price": "Gratis", "ideal": "Observación de Aves, Naturaleza",
-            "lat": -18.4167, "lon": -70.3242
+            "desc": "Obra de Eiffel. Monumento Nacional frente a la plaza.", 
+            "price": "Gratis", "ideal": "Fotografía, Religión", "lat": -18.4779, "lon": -70.3207
+        },
+        {
+            "id": 7, "name": "Humedal Río Lluta", "cat": "NATURALEZA", 
+            "img": "https://images.unsplash.com/photo-1596483957297-c6b653457a4e?w=800&q=80", 
+            "desc": "Santuario de la naturaleza. Avistamiento de aves migratorias.", 
+            "price": "Gratis", "ideal": "Aves, Naturaleza", "lat": -18.4167, "lon": -70.3242
+        },
+        {
+            "id": 8, "name": "Parque Nacional Lauca", "cat": "NATURALEZA", 
+            "img": "https://images.unsplash.com/photo-1465220183275-1faa863377e3?w=800&q=80", 
+            "desc": "Reserva mundial de la biosfera. Volcanes nevados y vicuñas.", 
+            "price": "Gratis", "ideal": "Fotografía, Relax", "lat": -18.1833, "lon": -69.2667
+        },
+        {
+            "id": 9, "name": "Playa Chinchorro", "cat": "PLAYA", 
+            "img": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80", 
+            "desc": "Extensa playa de aguas cálidas, ideal para bañarse.", 
+            "price": "Gratis", "ideal": "Familia, Playa", "lat": -18.4556, "lon": -70.2980
+        },
+        {
+            "id": 10, "name": "Playa El Laucho", "cat": "PLAYA", 
+            "img": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80", 
+            "desc": "Playa balneario protegida del viento, bares de playa.", 
+            "price": "Gratis", "ideal": "Fiesta, Relax", "lat": -18.4880, "lon": -70.3250
+        },
+        {
+            "id": 11, "name": "Presencias Tutelares", "cat": "CULTURAL", 
+            "img": "https://images.unsplash.com/photo-1623525283464-328639556394?w=800&q=80", 
+            "desc": "Esculturas monumentales en medio del desierto.", 
+            "price": "Gratis", "ideal": "Arte, Astronomía", "lat": -18.5750, "lon": -70.2217
+        },
+        {
+            "id": 12, "name": "Playa La Lisera", "cat": "PLAYA", 
+            "img": "https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b?w=800&q=80", 
+            "desc": "Balneario de forma circular con aguas tranquilas.", 
+            "price": "Gratis", "ideal": "Niños, Familia", "lat": -18.4933, "lon": -70.3238
+        },
+        {
+            "id": 13, "name": "Termas de Jurasi", "cat": "RELAX", 
+            "img": "https://images.unsplash.com/photo-1572506893693-e380f9cb650a?w=800&q=80", 
+            "desc": "Aguas termales de origen volcánico.", 
+            "price": "$2.000", "ideal": "Salud, Relax", "lat": -18.2081, "lon": -69.5694
         },
     ]
 
 if 'favorites' not in st.session_state: st.session_state.favorites = []
 if 'page' not in st.session_state: st.session_state.page = 'Inicio'
 
-# --- 4. FUNCIONES AUXILIARES Y POP-UP ---
+# --- 4. FUNCIONES ---
 def toggle_favorite(place_id):
     if place_id in st.session_state.favorites:
         st.session_state.favorites.remove(place_id)
     else:
         st.session_state.favorites.append(place_id)
 
-# ESTA ES LA FUNCIÓN NUEVA PARA LA VENTANA EMERGENTE
 @st.dialog("Detalles del Atractivo")
 def mostrar_detalle(place):
     st.image(place['img'], use_container_width=True)
     st.header(place['name'])
-    st.markdown(f"**📍 Zona:** {place['cat']}")
-    
-    # Columnas para Precio e Ideal Para
-    col1, col2 = st.columns(2)
-    with col1:
-        st.markdown(f"💰 **Precio:**\n\n{place['price']}")
-    with col2:
-        st.markdown(f"✨ **Ideal para:**\n\n{place['ideal']}")
-    
-    st.divider()
+    st.caption(f"📍 {place['cat']}")
+    c1, c2 = st.columns(2)
+    with c1: st.markdown(f"**Precio:** {place['price']}")
+    with c2: st.markdown(f"**Ideal:** {place['ideal']}")
     st.write(place['desc'])
+    st.divider()
     
-    # Botón de favorito dentro del popup
     es_fav = place['id'] in st.session_state.favorites
-    label_btn = "❌ Quitar de mi ruta" if es_fav else "❤️ Agregar a mi ruta"
-    if st.button(label_btn, key=f"modal_btn_{place['id']}"):
+    if st.button("❌ Quitar de Ruta" if es_fav else "❤️ Agregar a Ruta", key=f"mod_{place['id']}"):
         toggle_favorite(place['id'])
         st.rerun()
 
 def descargar_imagen(url):
     try:
-        headers = {'User-Agent': 'Mozilla/5.0'}
-        response = requests.get(url, headers=headers, stream=True, timeout=4, verify=False)
+        response = requests.get(url, headers={'User-Agent': 'Mozilla/5.0'}, stream=True, timeout=4, verify=False)
         if response.status_code == 200:
-            content_type = response.headers.get('content-type')
-            ext = mimetypes.guess_extension(content_type)
-            if not ext: ext = ".jpg"
+            ext = mimetypes.guess_extension(response.headers.get('content-type')) or ".jpg"
             fd, path = tempfile.mkstemp(suffix=ext)
             with os.fdopen(fd, 'wb') as tmp:
-                for chunk in response.iter_content(1024):
-                    tmp.write(chunk)
+                for chunk in response.iter_content(1024): tmp.write(chunk)
             return path
-    except:
-        return None
+    except: return None
     return None
 
 # --- 5. NAVEGACIÓN ---
-col_nav1, col_nav2 = st.columns([1, 4])
-with col_nav1:
-    st.markdown("## 🦙 AricaApp")
-with col_nav2:
+c1, c2 = st.columns([1, 4])
+with c1: st.markdown("## 🦙 Arica")
+with c2:
     b1, b2, b3 = st.columns(3)
-    if b1.button("🏠 Inicio", use_container_width=True): st.session_state.page = 'Inicio'
-    if b2.button("📷 Explorar Lugares", use_container_width=True): st.session_state.page = 'Explorar'
-    
+    if b1.button("Inicio", use_container_width=True): st.session_state.page = 'Inicio'
+    if b2.button("Explorar", use_container_width=True): st.session_state.page = 'Explorar'
     count = len(st.session_state.favorites)
-    label_plan = f"🗺️ Mi Ruta ({count})" if count > 0 else "🗺️ Mi Ruta"
-    if b3.button(label_plan, use_container_width=True): st.session_state.page = 'Planificador'
+    if b3.button(f"Mi Ruta ({count})", use_container_width=True): st.session_state.page = 'Planificador'
 
 st.divider()
 
 # --- 6. PÁGINAS ---
 
-# === PÁGINA INICIO ===
+# === INICIO ===
 if st.session_state.page == 'Inicio':
-    st.markdown("""
-    <div class="hero">
-        <h1>Bienvenido a Arica y Parinacota</h1>
-        <h3>Toca cualquier lugar para ver precios y detalles</h3>
-    </div>
-    """, unsafe_allow_html=True)
+    st.markdown("""<div class="hero"><h1>Descubre Arica y Parinacota</h1><h3>Región de la Eterna Primavera</h3></div>""", unsafe_allow_html=True)
 
-    c1, c2 = st.columns(2)
-    with c1:
-        st.subheader("☀️ Clima Hoy")
-        st.components.v1.html("""
-        <a class="weatherwidget-io" href="https://forecast7.com/es/n18d48n70d31/arica/" data-label_1="ARICA" data-label_2="CLIMA" data-theme="pure" >ARICA CLIMA</a>
-        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');</script>
-        """, height=150)
-    
-    with c2:
-        st.subheader("💰 Conversor (Referencial)")
-        monto = st.number_input("Pesos Chilenos (CLP)", min_value=0, value=10000, step=1000)
-        usd = monto / 950
-        st.success(f"🇺🇸 ${usd:,.2f} USD aprox.")
+    # Clima y Divisa
+    col_clima, col_divisa = st.columns(2)
+    with col_clima:
+        st.subheader("☀️ Clima")
+        st.components.v1.html("""<a class="weatherwidget-io" href="https://forecast7.com/es/n18d48n70d31/arica/" data-label_1="ARICA" data-label_2="CLIMA" data-theme="pure" >ARICA CLIMA</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');</script>""", height=100)
+    with col_divisa:
+        st.subheader("💰 Conversor")
+        val = st.number_input("CLP a USD", value=10000, step=1000)
+        st.info(f"${val:,.0f} CLP = ${val/950:.2f} USD")
 
-    st.write("---")
-    st.subheader("🌟 Destacados (Haz clic para ver detalles)")
-    
-    # GRID INTERACTIVO PARA INICIO
-    # Mostramos los primeros 6 lugares
-    cols = st.columns(3)
-    for index, place in enumerate(st.session_state.places[:6]):
-        with cols[index % 3]:
-            st.image(place['img'], use_container_width=True)
-            # El botón actúa como el "Click" en la tarjeta
-            if st.button(f"ℹ️ Ver {place['name']}", key=f"home_btn_{place['id']}"):
-                mostrar_detalle(place)
+    st.markdown("### 🌟 Destacados de la Región")
+    st.markdown("---")
 
-# === PÁGINA EXPLORAR ===
-elif st.session_state.page == 'Explorar':
-    st.title("Descubre todos los Atractivos")
+    # AQUI ESTA LA MAGIA PARA QUE SE VEA COMO GRID (FOTO 2)
+    # Usamos columnas de 4 en 4 para simular el Grid
+    cols = st.columns(4) 
     
-    filtro = st.text_input("🔍 Buscar lugar...", "")
-    
-    # Grid de tarjetas
-    cols = st.columns(3)
-    filtered_places = [p for p in st.session_state.places if filtro.lower() in p['name'].lower()]
-    
-    for index, place in enumerate(filtered_places):
-        with cols[index % 3]:
-            st.image(place['img'], use_container_width=True)
-            st.subheader(place['name'])
-            
-            # Botones de Acción
-            c_btn1, c_btn2 = st.columns(2)
-            with c_btn1:
-                # Botón para abrir el POP-UP
-                if st.button("Ver Info", key=f"info_{place['id']}"):
+    # Mostramos los primeros 8 lugares
+    for index, place in enumerate(st.session_state.places[:8]):
+        with cols[index % 4]:
+            # El contenedor le da el borde tipo tarjeta
+            with st.container(border=True):
+                st.image(place['img'], use_container_width=True)
+                st.markdown(f"**{place['name']}**")
+                st.caption(place['cat'])
+                
+                # El botón azul abajo de la foto
+                if st.button("ℹ️ Ver Info", key=f"home_{place['id']}", use_container_width=True):
                     mostrar_detalle(place)
-            with c_btn2:
-                # Botón rápido para agregar a ruta
-                es_fav = place['id'] in st.session_state.favorites
-                label = "✅ Listo" if es_fav else "➕ Ruta"
-                if st.button(label, key=f"add_{place['id']}"):
-                    toggle_favorite(place['id'])
-                    st.rerun()
-            st.markdown("---")
 
-# === PÁGINA PLANIFICADOR ===
+# === EXPLORAR ===
+elif st.session_state.page == 'Explorar':
+    st.title("🧭 Todos los Atractivos")
+    filtro = st.text_input("🔍 Buscar...", "")
+    
+    # Grid de 3 columnas para explorar
+    cols = st.columns(3)
+    filtrados = [p for p in st.session_state.places if filtro.lower() in p['name'].lower()]
+    
+    for index, place in enumerate(filtrados):
+        with cols[index % 3]:
+            with st.container(border=True):
+                st.image(place['img'], use_container_width=True)
+                st.subheader(place['name'])
+                c_btn1, c_btn2 = st.columns(2)
+                with c_btn1:
+                    if st.button("Info", key=f"ex_info_{place['id']}", use_container_width=True):
+                        mostrar_detalle(place)
+                with c_btn2:
+                    fav = place['id'] in st.session_state.favorites
+                    if st.button("✅" if fav else "➕", key=f"ex_add_{place['id']}", use_container_width=True):
+                        toggle_favorite(place['id'])
+                        st.rerun()
+
+# === PLANIFICADOR ===
 elif st.session_state.page == 'Planificador':
-    st.title("🗺️ Tu Itinerario Inteligente")
+    st.title("🗺️ Tu Ruta")
     
     if not st.session_state.favorites:
-        st.warning("⚠️ Aún no has seleccionado lugares. Ve a la pestaña 'Explorar' y agrega algunos.")
-        if st.button("Ir a Explorar"):
-            st.session_state.page = 'Explorar'
-            st.rerun()
+        st.warning("No hay lugares seleccionados.")
     else:
         mis_lugares = [p for p in st.session_state.places if p['id'] in st.session_state.favorites]
+        c_map, c_list = st.columns([2, 1])
         
-        col_map, col_datos = st.columns([2, 1])
-        with col_datos:
-            st.subheader("Lugares Elegidos")
-            for p in mis_lugares:
-                st.write(f"✅ {p['name']}")
-            dias = st.slider("Días de visita", 1, 7, 3)
-        
-        with col_map:
-            st.subheader("Mapa de Ruta")
-            df_map = pd.DataFrame(mis_lugares)
-            st.map(df_map, latitude='lat', longitude='lon', zoom=9)
+        with c_list:
+            st.write("Tus lugares:")
+            for p in mis_lugares: st.write(f"- {p['name']}")
+            dias = st.slider("Días", 1, 7, 3)
+            
+        with c_map:
+            st.map(pd.DataFrame(mis_lugares), latitude='lat', longitude='lon')
 
-        st.divider()
-        st.subheader("📥 Descargar Itinerario")
-        
-        # Función para crear el PDF
+        # PDF GENERATOR
         def generar_pdf():
             pdf = FPDF()
             pdf.add_page()
-            pdf.set_font("Arial", "B", 20)
-            pdf.cell(0, 10, "Mi Viaje a Arica y Parinacota", ln=True, align="C")
+            pdf.set_font("Arial", "B", 16)
+            pdf.cell(0, 10, "Itinerario Arica", ln=True, align="C")
             pdf.ln(10)
-            pdf.set_font("Arial", "", 12)
-            pdf.cell(0, 10, f"Duración del viaje: {dias} días", ln=True)
-            pdf.ln(5)
             
             import math
-            lugares_por_dia = math.ceil(len(mis_lugares) / dias)
+            per_day = math.ceil(len(mis_lugares)/dias)
             
-            for dia in range(dias):
-                pdf.set_fill_color(200, 220, 255)
-                pdf.set_font("Arial", "B", 14)
-                pdf.cell(0, 10, f"Día {dia + 1}", ln=True, fill=True)
+            for d in range(dias):
+                pdf.set_fill_color(230,230,230)
+                pdf.cell(0, 10, f"Dia {d+1}", ln=True, fill=True)
                 pdf.ln(5)
-                
-                inicio = dia * lugares_por_dia
-                fin = inicio + lugares_por_dia
-                lugares_dia = mis_lugares[inicio:fin]
-                
-                for p in lugares_dia:
-                    y_antes = pdf.get_y()
-                    img_path = descargar_imagen(p['img'])
-                    if img_path:
-                        try: pdf.image(img_path, x=10, y=y_antes, w=30, h=20)
+                for p in mis_lugares[d*per_day : (d+1)*per_day]:
+                    y = pdf.get_y()
+                    path = descargar_imagen(p['img'])
+                    if path: 
+                        try: pdf.image(path, x=10, y=y, w=25, h=20)
                         except: pass
-                        try: os.unlink(img_path) 
-                        except: pass
-                    
-                    pdf.set_xy(45, y_antes)
-                    pdf.set_font("Arial", "B", 12)
-                    pdf.cell(0, 6, p['name'], ln=True)
-                    
-                    pdf.set_xy(45, y_antes + 6)
-                    pdf.set_font("Arial", "", 10)
-                    pdf.multi_cell(0, 5, p['desc'])
-                    pdf.ln(15)
+                    pdf.set_xy(40, y)
+                    pdf.set_font("Arial","B",12)
+                    pdf.cell(0,6, p['name'], ln=True)
+                    pdf.set_x(40)
+                    pdf.set_font("Arial","",10)
+                    pdf.multi_cell(0,5, p['desc'])
+                    pdf.ln(10)
             return pdf.output(dest='S').encode('latin-1', 'replace')
 
-        # El botón para descargar
-        if st.button("📄 Generar PDF con fotos"):
-            with st.spinner("Creando tu guía personalizada..."):
-                pdf_bytes = generar_pdf()
-                b64 = base64.b64encode(pdf_bytes).decode()
-                href = f'<a href="data:application/octet-stream;base64,{b64}" download="Guia_Arica.pdf" style="text-decoration:none; color:white; background-color:#ff4b4b; padding:10px 20px; border-radius:5px; font-weight:bold;">⬇️ Clic para descargar PDF</a>'
-                st.markdown(href, unsafe_allow_html=True)
+        if st.button("Descargar PDF"):
+            b64 = base64.b64encode(generar_pdf()).decode()
+            st.markdown(f'<a href="data:application/octet-stream;base64,{b64}" download="ruta.pdf">Descargar</a>', unsafe_allow_html=True)
