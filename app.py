@@ -36,31 +36,34 @@ st.markdown("""
     
     .hero-text { font-size: 3rem; font-weight: bold; text-align: center; margin-bottom: 1rem; background: -webkit-linear-gradient(white, #aaaaaa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     
-    /* --- BARRA DE NAVEGACIÓN (NAVBAR) --- */
+    /* --- BARRA DE NAVEGACIÓN (NAVBAR) CORREGIDA --- */
+    /* El contenedor principal (la caja) ahora es AZUL */
     div.stRadio > div[role="radiogroup"] { 
         justify-content: center; 
-        background-color: #262730; 
+        background-color: #008CBA !important; /* FONDO AZUL */
         padding: 10px; 
         border-radius: 15px; 
-        border: 1px solid #444; 
+        border: 2px solid #005f7f; 
         margin-bottom: 25px; 
     }
-    div.stRadio > div[role="radiogroup"] > label { 
-        background-color: transparent; 
-        border: 1px solid transparent; 
-        padding: 5px 20px; 
-        border-radius: 10px; 
-        transition: all 0.3s;
-        color: white !important; /* FORZAR LETRA BLANCA EN EL MENÚ */
+    
+    /* El texto de las opciones (Inicio, Explorar...) ahora es BLANCO y NEGRITA */
+    div.stRadio > div[role="radiogroup"] label { 
+        color: white !important; /* LETRA BLANCA */
+        font-weight: bold !important; /* LETRA NEGRITA */
+        font-size: 1.1rem !important;
     }
-    div.stRadio > div[role="radiogroup"] > label:hover { 
-        background-color: #333; 
-        border-color: #555; 
-        color: #008CBA !important;
-    }
-    div.stRadio > div[role="radiogroup"] > label[data-checked="true"] {
-        background-color: #008CBA !important;
+    
+    /* Asegurar que los párrafos internos también sean blancos */
+    div.stRadio > div[role="radiogroup"] label p {
         color: white !important;
+        font-weight: bold !important;
+    }
+
+    /* Efecto al pasar el mouse (hover) */
+    div.stRadio > div[role="radiogroup"] > label:hover { 
+        background-color: rgba(255,255,255,0.2) !important; 
+        border-radius: 10px;
     }
 
 </style>
@@ -109,7 +112,6 @@ def generar_pdf_estilo_tarjeta(itinerario_dias):
             y_inicio = pdf.get_y()
             imagen_insertada = False
             try:
-                # Headers y timeout para evitar bloqueos
                 response = requests.get(item['img'], headers=headers, stream=True, timeout=5)
                 if response.status_code == 200:
                     with tempfile.NamedTemporaryFile(delete=False, suffix=".jpg") as tmp_file:
@@ -214,36 +216,4 @@ elif "Planificador" in opcion:
         st.markdown("""<div class="card">""", unsafe_allow_html=True)
         st.subheader("⚙️ Configuración")
         dias = st.number_input("¿Días de visita?", min_value=1, max_value=7, value=3)
-        st.write(f"**Lugares ({len(st.session_state.seleccionados)}):**")
-        for item in [d for d in data_turismo if d['id'] in st.session_state.seleccionados]:
-            st.write(f"- {item['nombre']}")
-        
-        st.write("")
-        if st.button("✨ Generar Itinerario", use_container_width=True):
-            st.session_state.generado = True
-        st.markdown("</div>", unsafe_allow_html=True)
-
-    with col_resumen:
-        if st.session_state.get('generado'):
-            st.markdown("## 📋 Tu Itinerario Sugerido")
-            items_obj = [d for d in data_turismo if d['id'] in st.session_state.seleccionados]
-            import math
-            items_por_dia = math.ceil(len(items_obj) / dias)
-            itinerario_final = {}
-            idx_item = 0
-            for dia in range(1, dias + 1):
-                itinerario_final[dia] = []
-                with st.expander(f"📅 Día {dia}", expanded=True):
-                    for _ in range(items_por_dia):
-                        if idx_item < len(items_obj):
-                            act = items_obj[idx_item]
-                            itinerario_final[dia].append(act)
-                            c1, c2 = st.columns([1, 4])
-                            c1.image(act['img'], use_container_width=True)
-                            c2.markdown(f"**{act['nombre']}**")
-                            c2.caption(f"📍 {act['ubicacion']} | ⏱️ {act['duracion']}h")
-                            idx_item += 1
-
-            pdf_bytes = generar_pdf_estilo_tarjeta(itinerario_final)
-            st.success("✅ ¡Itinerario listo!")
-            st.download_button("📥 Descargar PDF (Con Fotos)", data=pdf_bytes, file_name="Itinerario_Arica.pdf", mime="application/pdf", use_container_width=True)
+        st.write(f"**Lugares ({len(st.session
