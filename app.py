@@ -34,17 +34,17 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# 3. Datos Completos (Los 13 lugares solicitados)
+# 3. Datos Completos (CON IMÁGENES REPARADAS)
 if 'places' not in st.session_state:
     st.session_state.places = [
-        {"id": 1, "name": "Morro de Arica", "cat": "Histórico", "img": "https://geositiosdechile.sernageomin.cl/wp-content/uploads/sites/4/2024/05/Morro-de-Arica.jpg", "desc": "Icono de la ciudad, vista panorámica.", "location": "Centro de Arica", "time_str": "2 horas", "hours": 2, "lat": -18.4802, "lon": -70.3250},
-        {"id": 2, "name": "Lago Chungará", "cat": "Naturaleza", "img": "https://www.tourlagochungara.com/media/lago-chungara-o.jpg", "desc": "Uno de los lagos más altos del mundo.", "location": "Altiplano, Parque Lauca", "time_str": "Full Day", "hours": 8, "lat": -18.2500, "lon": -69.1667},
-        {"id": 3, "name": "Cuevas de Anzota", "cat": "Aventura", "img": "https://www.costachinchorro.cl/ccc23/wp-content/uploads/2023/04/DSF8586-1024x683.jpg", "desc": "Formaciones geológicas milenarias.", "location": "Sector sur, a 12 km del centro", "time_str": "3 horas", "hours": 3, "lat": -18.5500, "lon": -70.3300},
-        {"id": 4, "name": "Pueblo de Putre", "cat": "Cultural", "img": "https://www.civitatis.com/f/chile/putre/putre.jpg", "desc": "Capital de la provincia de Parinacota.", "location": "Precordillera, a 145 km de Arica", "time_str": "4 horas", "hours": 4, "lat": -18.1950, "lon": -69.5600},
-        {"id": 5, "name": "Museo Arqueológico Azapa", "cat": "Cultural", "img": "https://www.registromuseoschile.cl/663/articles-50828_imagen_portada.thumb_i_portada.jpg", "desc": "Hogar de las momias Chinchorro.", "location": "Valle de Azapa, km 12", "time_str": "3 horas", "hours": 3, "lat": -18.5150, "lon": -70.1800},
-        {"id": 6, "name": "Catedral San Marcos", "cat": "Histórico", "img": "https://www.monumentos.gob.cl/sites/default/files/image-monumentos/00381_mh_15101-24.jpg", "desc": "Diseñada por Gustave Eiffel.", "location": "Plaza Colón, Centro", "time_str": "1 hora", "hours": 1, "lat": -18.4779, "lon": -70.3207},
-        {"id": 7, "name": "Humedal Río Lluta", "cat": "Naturaleza", "img": "https://media.biobiochile.cl/wp-content/uploads/2019/01/dsc00466-768x512-1.jpg", "desc": "Santuario de la naturaleza y aves.", "location": "Desembocadura Río Lluta", "time_str": "2 horas", "hours": 2, "lat": -18.4167, "lon": -70.3167},
-        {"id": 8, "name": "Parque Nacional Lauca", "cat": "Naturaleza", "img": "https://www.conaf.cl/wp-content/uploads/2024/01/Lago-Chungara-PArque-Nacional-Lauca-sernatur-ATR22-1.jpg", "desc": "Reserva de la biosfera, volcanes y fauna.", "location": "Altiplano Andino", "time_str": "Full Day", "hours": 9, "lat": -18.1833, "lon": -69.2333},
+        {"id": 1, "name": "Morro de Arica", "cat": "Histórico", "img": "https://upload.wikimedia.org/wikipedia/commons/e/e5/Morro_de_arica_view.jpg", "desc": "Icono de la ciudad, vista panorámica.", "location": "Centro de Arica", "time_str": "2 horas", "hours": 2, "lat": -18.4802, "lon": -70.3250},
+        {"id": 2, "name": "Lago Chungará", "cat": "Naturaleza", "img": "https://upload.wikimedia.org/wikipedia/commons/a/a2/Parinacota.jpg", "desc": "Uno de los lagos más altos del mundo.", "location": "Altiplano, Parque Lauca", "time_str": "Full Day", "hours": 8, "lat": -18.2500, "lon": -69.1667},
+        {"id": 3, "name": "Cuevas de Anzota", "cat": "Aventura", "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Cuevas_de_Anzota.jpg/1280px-Cuevas_de_Anzota.jpg", "desc": "Formaciones geológicas milenarias.", "location": "Sector sur, a 12 km del centro", "time_str": "3 horas", "hours": 3, "lat": -18.5500, "lon": -70.3300},
+        {"id": 4, "name": "Pueblo de Putre", "cat": "Cultural", "img": "https://upload.wikimedia.org/wikipedia/commons/c/c2/Putre_church.jpg", "desc": "Capital de la provincia de Parinacota.", "location": "Precordillera, a 145 km de Arica", "time_str": "4 horas", "hours": 4, "lat": -18.1950, "lon": -69.5600},
+        {"id": 5, "name": "Museo Arqueológico Azapa", "cat": "Cultural", "img": "https://upload.wikimedia.org/wikipedia/commons/2/23/Museo_Arqueol%C3%B3gico_San_Miguel_de_Azapa.jpg", "desc": "Hogar de las momias Chinchorro.", "location": "Valle de Azapa, km 12", "time_str": "3 horas", "hours": 3, "lat": -18.5150, "lon": -70.1800},
+        {"id": 6, "name": "Catedral San Marcos", "cat": "Histórico", "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Catedral_de_San_Marcos%2C_Arica%2C_Chile%2C_2024-05-18%2C_DD_16.jpg/640px-Catedral_de_San_Marcos%2C_Arica%2C_Chile%2C_2024-05-18%2C_DD_16.jpg", "desc": "Diseñada por Gustave Eiffel.", "location": "Plaza Colón, Centro", "time_str": "1 hora", "hours": 1, "lat": -18.4779, "lon": -70.3207},
+        {"id": 7, "name": "Humedal Río Lluta", "cat": "Naturaleza", "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Desembocadura_del_rio_Lluta.jpg/1280px-Desembocadura_del_rio_Lluta.jpg", "desc": "Santuario de la naturaleza y aves.", "location": "Desembocadura Río Lluta", "time_str": "2 horas", "hours": 2, "lat": -18.4167, "lon": -70.3167},
+        {"id": 8, "name": "Parque Nacional Lauca", "cat": "Naturaleza", "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Lauca_National_Park.jpg/1280px-Lauca_National_Park.jpg", "desc": "Reserva de la biosfera, volcanes y fauna.", "location": "Altiplano Andino", "time_str": "Full Day", "hours": 9, "lat": -18.1833, "lon": -69.2333},
         {"id": 9, "name": "Playa Chinchorro", "cat": "Playa", "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Playa_Chinchorro%2C_Arica.jpg/1280px-Playa_Chinchorro%2C_Arica.jpg", "desc": "Aguas cálidas y paseo costero.", "location": "Zona Norte de Arica", "time_str": "3 horas", "hours": 3, "lat": -18.4550, "lon": -70.3000},
         {"id": 10, "name": "Playa El Laucho", "cat": "Playa", "img": "https://upload.wikimedia.org/wikipedia/commons/1/18/Playa_El_Laucho_-_Arica.jpg", "desc": "Playa balneario con oleaje suave.", "location": "Av. Comandante San Martín", "time_str": "3 horas", "hours": 3, "lat": -18.4880, "lon": -70.3250},
         {"id": 11, "name": "Presencias Tutelares", "cat": "Cultural", "img": "https://upload.wikimedia.org/wikipedia/commons/8/87/Presencias_Tutelares.jpg", "desc": "Esculturas gigantes en el desierto.", "location": "Pampa de Chaca, Panamericana", "time_str": "1 hora", "hours": 1, "lat": -18.6667, "lon": -70.1833},
@@ -94,15 +94,13 @@ if st.session_state.page == 'Inicio':
         st.caption(f"Aprox: ${amount/935:,.2f} USD")
         st.markdown('</div>', unsafe_allow_html=True)
 
-    # SECCIÓN DESTACADOS (CON TIP Y TODOS LOS LUGARES VISUALES)
+    # SECCIÓN DESTACADOS
     st.write("")
     st.subheader("🌟 Destacados de la Región")
-    
-    # El mensaje de Tip solicitado
     st.info("💡 **Tip:** Ve a la pestaña **'Explorar'** para seleccionar tus lugares favoritos y generar tu itinerario automático.")
     
-    # Galería visual de TODOS los lugares (solo visualización)
-    cols = st.columns(4) # 4 columnas para que quepan mejor
+    # Galería visual
+    cols = st.columns(4)
     for i, place in enumerate(st.session_state.places):
         with cols[i % 4]:
             st.image(place['img'], use_container_width=True)
@@ -114,18 +112,15 @@ elif st.session_state.page == 'Explorar':
     st.title("🧭 Selecciona tus Favoritos")
     st.markdown("Marca los lugares que quieres visitar para armar tu plan.")
     
-    # Buscador
     search = st.text_input("🔍 Buscar lugar...", "")
     filtered = [p for p in st.session_state.places if search.lower() in p['name'].lower()]
     
-    # Grid de selección
     cols = st.columns(3)
     for i, place in enumerate(filtered):
         with cols[i % 3]:
             st.image(place['img'], use_container_width=True)
             st.markdown(f"**{place['name']}**")
             st.caption(f"{place['location']} | ⏱ {place['time_str']}")
-            # Checkbox de selección
             st.checkbox("Añadir al viaje", value=place['id'] in st.session_state.favorites, key=f"chk_{place['id']}", on_change=toggle_favorite, args=(place['id'],))
             st.divider()
 
