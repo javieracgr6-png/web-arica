@@ -322,9 +322,9 @@ elif st.session_state.page == 'Planificador':
                     pdf.ln(15)
             return pdf.output(dest='S').encode('latin-1', 'replace')
 
-        if st.button("📄 Generar PDF con fotos"):
+       if st.button("📄 Generar PDF con fotos"):
             with st.spinner("Creando tu guía personalizada..."):
                 pdf_bytes = generar_pdf()
                 b64 = base64.b64encode(pdf_bytes).decode()
                 href = f'<a href="data:application/octet-stream;base64,{b64}" download="Guia_Arica.pdf" style="text-decoration:none; color:white; background-color:#ff4b4b; padding:10px 20px; border-radius:5px; font-weight:bold;">⬇️ Clic para descargar PDF</a>'
-                st.markdown(href, unsafe_allow_html=True), unsafe_allow_html=True)
+                st.markdown(href, unsafe_allow_html=True)
