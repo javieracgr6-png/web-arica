@@ -91,18 +91,18 @@ st.markdown("""
 # --- 3. DATOS DE LOS ATRACTIVOS ---
 data_turismo = [
     {"id": 1, "nombre": "Morro de Arica", "categoria": "Cultural", "duracion": 2, "ubicacion": "Centro de Arica", "img": "https://www.elmorrocotudo.cl/sites/elmorrocotudo.cl/files/imagen_noticia/morro-de-arica-1.jpg"},
-    {"id": 2, "nombre": "Lago Chungará", "categoria": "Naturaleza", "duracion": 8, "ubicacion": "Altiplano, Parque Lauca", "img": "https://placehold.co/400x300/png?text=Lago+Chungara"},
-    {"id": 3, "nombre": "Cuevas de Anzota", "categoria": "Naturaleza", "duracion": 3, "ubicacion": "Sector Sur, a 12km", "img": "https://placehold.co/400x300/png?text=Cuevas+Anzota"},
-    {"id": 4, "nombre": "Putre", "categoria": "Cultural", "duracion": 5, "ubicacion": "Precordillera", "img": "https://placehold.co/400x300/png?text=Putre"},
-    {"id": 5, "nombre": "Museo Arqueológico Azapa", "categoria": "Arqueológico", "duracion": 3, "ubicacion": "Valle de Azapa, km 12", "img": "https://placehold.co/400x300/png?text=Museo+Azapa"},
-    {"id": 6, "nombre": "Catedral San Marcos", "categoria": "Cultural", "duracion": 1, "ubicacion": "Plaza Colón, Centro", "img": "https://placehold.co/400x300/png?text=Catedral+San+Marcos"},
-    {"id": 7, "nombre": "Humedal Río Lluta", "categoria": "Naturaleza", "duracion": 2, "ubicacion": "Desembocadura Río Lluta", "img": "https://placehold.co/400x300/png?text=Humedal+Lluta"},
-    {"id": 8, "nombre": "Parque Nacional Lauca", "categoria": "Naturaleza", "duracion": 8, "ubicacion": "Altiplano Andino", "img": "https://placehold.co/400x300/png?text=PN+Lauca"},
-    {"id": 9, "nombre": "Playa Chinchorro", "categoria": "Playa", "duracion": 3, "ubicacion": "Arica Norte", "img": "https://placehold.co/400x300/png?text=Playa+Chinchorro"},
-    {"id": 10, "nombre": "Playa El Laucho", "categoria": "Playa", "duracion": 3, "ubicacion": "Arica Sur", "img": "https://placehold.co/400x300/png?text=Playa+El+Laucho"},
-    {"id": 11, "nombre": "Presencias Tutelares", "categoria": "Arqueológico", "duracion": 2, "ubicacion": "Pampa de Acha", "img": "https://placehold.co/400x300/png?text=Presencias+Tutelares"},
-    {"id": 12, "nombre": "Playa La Lisera", "categoria": "Playa", "duracion": 3, "ubicacion": "Arica Sur", "img": "https://placehold.co/400x300/png?text=Playa+La+Lisera"},
-    {"id": 13, "nombre": "Termas de Jurasi", "categoria": "Naturaleza", "duracion": 4, "ubicacion": "Cercano a Putre", "img": "https://placehold.co/400x300/png?text=Termas+Jurasi"},
+    {"id": 2, "nombre": "Lago Chungará", "categoria": "Naturaleza", "duracion": 8, "ubicacion": "Altiplano, Parque Lauca", "img": "https://media.istockphoto.com/id/1210936595/es/foto/alpacas-graze-in-lauca-national-park-near-putre-chile.jpg?s=612x612&w=0&k=20&c=0BcUvoFlyaXc40jTaAm_hmmcpPTFteKLoCDhwXrJaWE="},
+    {"id": 3, "nombre": "Cuevas de Anzota", "categoria": "Naturaleza", "duracion": 3, "ubicacion": "Sector Sur, a 12km", "img": "https://www.costachinchorro.cl/ccc23/wp-content/uploads/2019/01/DSCF6574-e1548174607840-1200x600.jpg"},
+    {"id": 4, "nombre": "Putre", "categoria": "Cultural", "duracion": 5, "ubicacion": "Precordillera", "img": "https://laravel-production-storage1-oddrmnfoicay.s3.amazonaws.com/actividades/Putre%20%282%29.jpg"},
+    {"id": 5, "nombre": "Museo Arqueológico Azapa", "categoria": "Arqueológico", "duracion": 3, "ubicacion": "Valle de Azapa, km 12", "img": "https://www.registromuseoschile.cl/663/articles-50828_imagen_portada.thumb_i_portada.jpg"},
+    {"id": 6, "nombre": "Catedral San Marcos", "categoria": "Cultural", "duracion": 1, "ubicacion": "Plaza Colón, Centro", "img": "https://www.monumentos.gob.cl/sites/default/files/image-monumentos/00381_mh_15101-24.jpg"},
+    {"id": 7, "nombre": "Humedal Río Lluta", "categoria": "Naturaleza", "duracion": 2, "ubicacion": "Desembocadura Río Lluta", "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAvTXRKiBi3FRCJgeetShO2TuwcY5CIq4zfg&s"},
+    {"id": 8, "nombre": "Parque Nacional Lauca", "categoria": "Naturaleza", "duracion": 8, "ubicacion": "Altiplano Andino", "https://www.conaf.cl/wp-content/uploads/2024/01/Lago-Chungara-PArque-Nacional-Lauca-sernatur-ATR22-1.jpg"},
+    {"id": 9, "nombre": "Playa Chinchorro", "categoria": "Playa", "duracion": 3, "ubicacion": "Arica Norte", "img": "https://www.aricaldia.cl/wp-content/uploads/2020/01/playa_chinchorro.jpg"},
+    {"id": 10, "nombre": "Playa El Laucho", "categoria": "Playa", "duracion": 3, "ubicacion": "Arica Sur", "img": "https://www.revistagente.com/wp-content/uploads/2023/12/playa-el-laucho.jpeg.webp"},
+    {"id": 11, "nombre": "Presencias Tutelares", "categoria": "Arqueológico", "duracion": 2, "ubicacion": "Pampa de Acha", "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZNJLnQYD5CQe9PlS16g1dxgcjlOSj_6jj5A&s"},
+    {"id": 12, "nombre": "Playa La Lisera", "categoria": "Playa", "duracion": 3, "ubicacion": "Arica Sur", "img": "https://aricasiempreactiva.cl/wp-content/uploads/elementor/thumbs/Playa-La-Lisera-Arica-Vista-Panoramica-1900x785-1-p46ftwempmah0fol2yf2f2g1pnxq4tium3jzc7g80w.jpg"},
+    {"id": 13, "nombre": "Termas de Jurasi", "categoria": "Naturaleza", "duracion": 4, "ubicacion": "Cercano a Putre", "img": "https://chileestuyo.cl/wp-content/uploads/2015/07/termas-de-jurasi.jpg"},
 ]
 
 # Inicializar estado
