@@ -4,7 +4,7 @@ from fpdf import FPDF
 import base64
 
 # 1. Configuración de la página
-st.set_page_config(layout="wide", page_title="Descubre Arica", page_icon="🏔️")
+st.set_page_config(layout="wide", page_title="Descubre Arica y Parinacota", page_icon="🏔️")
 
 # 2. Estilos CSS (CORREGIDO PARA QUE SE VEAN LAS LETRAS)
 st.markdown("""
