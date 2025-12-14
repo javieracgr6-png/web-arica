@@ -49,7 +49,7 @@ if 'places' not in st.session_state:
         {"id": 9, "name": "Playa Chinchorro", "cat": "Playa", "img": "https://www.aricaldia.cl/wp-content/uploads/2020/01/playa_chinchorro.jpg", "desc": "Aguas cálidas.", "location": "Zona Norte", "time_str": "3 horas", "hours": 3, "lat": -18.4550, "lon": -70.3000},
         {"id": 10, "name": "Playa El Laucho", "cat": "Playa", "img": "https://www.revistagente.com/wp-content/uploads/2023/12/playa-el-laucho.jpeg.webp", "desc": "Oleaje suave.", "location": "Av. San Martín", "time_str": "3 horas", "hours": 3, "lat": -18.4880, "lon": -70.3250},
         {"id": 11, "name": "Presencias Tutelares", "cat": "Cultural", "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZNJLnQYD5CQe9PlS16g1dxgcjlOSj_6jj5A&s", "desc": "Esculturas gigantes.", "location": "Pampa de Chaca", "time_str": "1 hora", "hours": 1, "lat": -18.6667, "lon": -70.1833},
-        {"id": 12, "name": "Playa La Lisera", "cat": "Playa", "img": "https://aricasiempreactiva.cl/wp-content/uploads/2020/11/Playa-La-Lisera-Arica-Vista-Panoramica-1900x785-1.jpg", "desc": "Familiar.", "location": "Sur de Arica", "time_str": "3 horas", "hours": 3, "lat": -18.4950, "lon": -70.3280},
+        {"id": 12, "name": "Playa La Lisera", "cat": "Playa", "https://aricasiempreactiva.cl/wp-content/uploads/2020/11/Playa-La-Lisera-Arica-Vista-Panoramica-1900x785-1.jpg", "desc": "Familiar.", "location": "Sur de Arica", "time_str": "3 horas", "hours": 3, "lat": -18.4950, "lon": -70.3280},
         {"id": 13, "name": "Termas de Jurasi", "cat": "Relax", "img": "https://chileestuyo.cl/wp-content/uploads/2015/07/termas-de-jurasi.jpg", "desc": "Aguas termales.", "location": "Cerca de Putre", "time_str": "3 horas", "hours": 3, "lat": -18.2000, "lon": -69.5800},
     ]
 
